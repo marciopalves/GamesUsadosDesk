@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/07/11 17:56:41.000.682,=C:\Users\Marcio\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/07/11 17:59:56.000.575,C:\projetos\ufg\GamesUsadosDesk\View\untPrincipal.dfm=C:\Users\Marcio\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2022/07/11 17:59:56.000.575,C:\projetos\ufg\GamesUsadosDesk\View\untPrincipal.pas=C:\Users\Marcio\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/07/11 18:00:17.000.285,C:\projetos\ufg\GamesUsadosDesk\GamesUsadosDesk.dproj=C:\Users\Marcio\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2022/07/11 18:00:32.000.865,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/11 18:00:48.000.924,C:\projetos\ufg\GamesUsadosDesk\Model\untLogin.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 07:43:57.000.945,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 07:49:18.000.805,C:\projetos\ufg\GamesUsadosDesk\Controller\uILogin.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 07:51:24.000.001,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 07:51:52.000.673,C:\projetos\ufg\GamesUsadosDesk\Controller\uLoginControl.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 09:40:16.000.797,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 09:42:25.000.571,C:\projetos\ufg\GamesUsadosDesk\Model\untUser.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 10:57:38.000.769,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 11:51:04.000.108,C:\projetos\ufg\GamesUsadosDesk\View\untLoginView.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/12 11:51:04.000.108,C:\projetos\ufg\GamesUsadosDesk\View\untLoginView.dfm=C:\projetos\ufg\GamesUsadosDesk\Unit1.dfm</Transaction>
+    <Transaction>2022/07/14 06:00:04.000.508,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 06:00:45.000.283,C:\projetos\ufg\GamesUsadosDesk\Unit1.pas=C:\projetos\ufg\GamesUsadosDesk\Controller\udmConexao.pas</Transaction>
+    <Transaction>2022/07/14 06:00:45.000.283,C:\projetos\ufg\GamesUsadosDesk\Unit1.dfm=C:\projetos\ufg\GamesUsadosDesk\Controller\udmConexao.dfm</Transaction>
+    <Transaction>2022/07/14 06:53:06.000.440,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 06:54:17.000.558,C:\projetos\ufg\GamesUsadosDesk\Model\untManager.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 07:06:31.000.572,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 07:07:06.000.312,C:\projetos\ufg\GamesUsadosDesk\Controller\uManagerControl.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 07:07:32.000.418,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 07:08:04.000.502,C:\projetos\ufg\GamesUsadosDesk\UICrud.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 07:14:58.000.915,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 07:27:05.000.877,C:\projetos\ufg\GamesUsadosDesk\View\untManagerView.dfm=C:\projetos\ufg\GamesUsadosDesk\Unit1.dfm</Transaction>
+    <Transaction>2022/07/14 07:27:05.000.877,C:\projetos\ufg\GamesUsadosDesk\View\untManagerView.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/14 07:33:54.000.635,=C:\projetos\ufg\GamesUsadosDesk\Controller\UIManager.pas</Transaction>
+    <Transaction>2022/07/18 06:29:35.412,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/07/18 06:30:13.882,C:\projetos\ufg\GamesUsadosDesk\Controller\untUtils.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>
