@@ -54,8 +54,9 @@ begin
       vManager.Phone    := ApenasNumerosString(edtMaskTel.Text);
       vManager.Email    := edtEmail.Text;
       vManager.Password := edtPassword.Text;
-
       vManagerControl   := TManagerControl.Create();
+
+      GerarLog('Objeto Manager Criado em memória');
 
       if (vManagerControl.Criar(vManager)) then
         ShowMessage('Gerente cadastrado com sucesso!');

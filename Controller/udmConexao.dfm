@@ -5,6 +5,7 @@ object DMConexao: TDMConexao
   Width = 274
   object IdHTTP: TIdHTTP
     AllowCookies = True
+    HandleRedirects = True
     ProxyParams.BasicAuthentication = False
     ProxyParams.ProxyPort = 0
     Request.ContentLength = -1
