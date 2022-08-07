@@ -12,6 +12,7 @@ object frmLogin: TfrmLogin
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -24,7 +25,6 @@ object frmLogin: TfrmLogin
     Color = clSilver
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 237
     object lblEmail: TLabel
       Left = 106
       Top = 15
@@ -57,7 +57,6 @@ object frmLogin: TfrmLogin
       Width = 193
       Height = 21
       TabOrder = 0
-      Text = 'admin@admin.com'
     end
     object edtPassword: TEdit
       Left = 48
@@ -66,7 +65,6 @@ object frmLogin: TfrmLogin
       Height = 21
       PasswordChar = '*'
       TabOrder = 1
-      Text = '123456'
     end
     object bbConfirmar: TBitBtn
       Left = 16

@@ -16,6 +16,7 @@ type
     bbConfirmar: TBitBtn;
     bbCancelar: TBitBtn;
     procedure bbConfirmarClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,7 +30,7 @@ implementation
 
 {$R *.dfm}
 
-uses uLoginControl, untPrincipal;
+uses uLoginControl, untPrincipal, untUtils;
 
 procedure TfrmLogin.bbConfirmarClick(Sender: TObject);
 Var
@@ -41,6 +42,7 @@ begin
 
     if frmPrincipal.vLogin.Token <> '' then
     begin
+      GerarLog('Usuário Logado com sucesso! Token.:'+frmPrincipal.vLogin.Token);
       frmPrincipal.HabilitarDesabilitarMenus;
       ShowMessage('Usuário Logado com sucesso!')
     end;
@@ -48,6 +50,18 @@ begin
   finally
     FreeAndNil(vLoginControl);
   end;
+end;
+
+procedure TfrmLogin.FormShow(Sender: TObject);
+begin
+  {$IFDEF RELEASE}
+     edtEmail.Clear;
+     edtPassword.Clear;
+  {$ELSE}
+     edtEmail.Text    := 'admin@admin.com';
+     edtPassword.Text := '123456';
+  {$ENDIF}
+
 end;
 
 end.
