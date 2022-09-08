@@ -12,7 +12,6 @@ object frmLogin: TfrmLogin
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Panel1: TPanel
@@ -96,6 +95,20 @@ object frmLogin: TfrmLogin
       ModalResult = 2
       ParentFont = False
       TabOrder = 3
+    end
+  end
+  object ActionList: TActionList
+    Left = 248
+    Top = 80
+    object actAdmin: TAction
+      Caption = 'actAdmin'
+      ShortCut = 32880
+      OnExecute = actAdminExecute
+    end
+    object actClear: TAction
+      Caption = 'actClear'
+      ShortCut = 27
+      OnExecute = actClearExecute
     end
   end
 end
