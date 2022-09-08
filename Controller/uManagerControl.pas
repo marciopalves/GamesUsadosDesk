@@ -15,8 +15,8 @@ end;
 
 implementation
 
-Uses System.SysUtils, System.Classes, Rest.Json,
-     REST.JsonReflect, untPrincipal, untUser, udmConexao, untUtils;
+Uses System.SysUtils, System.Classes, System.JSON, Rest.Json, REST.JsonReflect,
+     Rest.Types, untUser, udmConexao, untUtils, REST.Authenticator.OAuth;
 
 CONST
   URL = 'http://localhost:8080/users/register/manager';
@@ -25,31 +25,39 @@ CONST
 
 function TManagerControl.Criar(const pManager: TManager): Boolean;
 Var
-  JsonStreamRetorno, JsonStreamEnvio: TStringStream;
+  JsonStreamEnvio: TStringStream;
+  JsonEnvio: TJsonObject;
+  JsonValue: TJSonValue;
   vMarshal: TJSONMarshal;
   vTextoJson: String;
 begin
   try
-    DMConexao.IdHTTP.Request.BasicAuthentication := True;
-    DMConexao.IdHTTP.Request.CustomHeaders.Add('Authorization=Bearer '+frmPrincipal.vLogin.Token);
-
-    GerarLog('Criando Gerente Definindo Token'+DMConexao.IdHTTP.Request.CustomHeaders.Text);
-
     vMarshal   := TJSONMarshal.Create (TJSONConverter.Create);
-    vTextoJson := vMarshal.Marshal(pManager).ToString();
+//    vTextoJson := vMarshal.Marshal(pManager).ToString();
+//    JsonStreamEnvio   := TStringStream.Create(vTextoJson);
 
-    JsonStreamEnvio   := TStringStream.Create(vTextoJson);
-    JsonStreamRetorno := TStringStream.Create('');
+    JsonEnvio := TJSONObject.Create;
+    JsonEnvio.AddPair('Name',     pManager.Name);
+    JsonEnvio.AddPair('Phone',    pManager.Phone);
+    JsonEnvio.AddPair('Email',    pManager.Email);
+    JsonEnvio.AddPair('Password', pManager.Password);
+
+    DMConexao.InicializaRequest(URL);
+    DMConexao.OAuth2Authenticator.TokenType   := TOAuth2TokenType.ttBEARER;
+    DMConexao.OAuth2Authenticator.AccessToken := DMConexao.Login.Token;
+
+    DMConexao.RestRequest.Method := rmPOST;
+    //DMConexao.RestRequest.AddBody(JsonStreamEnvio);
+    DMConexao.RestRequest.AddBody(JsonEnvio);
     try
-      GerarLog('Criando Gerente '+DMConexao.IdHTTP.Request.CustomHeaders.Text+
-                sLineBreak+'URL.:'+URL+' Json'+vTextoJson);
+      DMConexao.RESTRequest.Execute;
 
-      DMConexao.IdHTTP.Post(URL, JsonStreamEnvio, JsonStreamRetorno);
-      Result := DMConexao.IdHTTP.ResponseCode = 200;
+      Result := DMConexao.RESTResponse.StatusCode = 200;
 
     except on E:exception do
       begin
-        GerarLog('Erro ao criar Gerente - '+e.ToString+
+        Result := False;
+        GerarLog('Erro ao acessar endpoint criar Gerente - '+e.ToString+
                   sLineBreak+'URL.:'+URL+' - '+vTextoJson);
         raise Exception.Create('Erro acessar API '+e.ToString);
       end;
@@ -58,7 +66,6 @@ begin
   finally
     vMarshal.Free;
     JsonStreamEnvio.Free;
-    JsonStreamRetorno.Free;
   end;
 end;
 

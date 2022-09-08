@@ -204,4 +204,18 @@ object frmManager: TfrmManager
       TabOrder = 1
     end
   end
+  object ActionList: TActionList
+    Left = 456
+    Top = 24
+    object actAutoCad: TAction
+      Caption = 'actAutoCad'
+      ShortCut = 32880
+      OnExecute = actAutoCadExecute
+    end
+    object actClear: TAction
+      Caption = 'actClear'
+      ShortCut = 27
+      OnExecute = actClearExecute
+    end
+  end
 end

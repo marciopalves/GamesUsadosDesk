@@ -1,10 +1,10 @@
 object DMConexao: TDMConexao
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 174
-  Width = 274
+  OnDestroy = DataModuleDestroy
+  Height = 280
+  Width = 347
   object IdHTTP: TIdHTTP
-    AllowCookies = True
     HandleRedirects = True
     ProxyParams.BasicAuthentication = False
     ProxyParams.ProxyPort = 0
@@ -30,5 +30,37 @@ object DMConexao: TDMConexao
     SSLOptions.VerifyDepth = 0
     Left = 18
     Top = 24
+  end
+  object RESTClient: TRESTClient
+    Authenticator = OAuth2Authenticator
+    BaseURL = 'http://localhost:8080/users/register/manager'
+    Params = <>
+    ReadTimeout = 60000
+    Left = 208
+    Top = 144
+  end
+  object RESTRequest: TRESTRequest
+    AssignedValues = [rvConnectTimeout, rvReadTimeout]
+    Client = RESTClient
+    Method = rmPOST
+    Params = <
+      item
+        Kind = pkREQUESTBODY
+        Name = 'bodyD330A569C8F8409A9326A2137167312C'
+        Value = '{"email":"admin@admin.com", "password":"123456"}'
+        ContentType = ctAPPLICATION_JSON
+      end>
+    Response = RESTResponse
+    ReadTimeout = 60000
+    Left = 208
+    Top = 80
+  end
+  object RESTResponse: TRESTResponse
+    Left = 208
+    Top = 208
+  end
+  object OAuth2Authenticator: TOAuth2Authenticator
+    Left = 208
+    Top = 16
   end
 end
