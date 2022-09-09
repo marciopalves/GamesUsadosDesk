@@ -117,12 +117,6 @@
         <DCCReference Include="View\untGamesView.pas">
             <Form>frmGamesView</Form>
         </DCCReference>
-        <DCCReference Include="Model\untGame.pas"/>
-        <DCCReference Include="Controller\udmGames.pas">
-            <Form>DMGames</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="Controller\udmManager.pas">
             <Form>DMManager</Form>
             <FormType>dfm</FormType>
