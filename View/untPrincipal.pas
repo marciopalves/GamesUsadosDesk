@@ -24,9 +24,12 @@ type
     Logar3: TMenuItem;
     Logar4: TMenuItem;
     Logar1: TMenuItem;
+    actParametros: TAction;
+    Configuraes1: TMenuItem;
     procedure actLoginExecute(Sender: TObject);
     procedure actGerentesExecute(Sender: TObject);
     procedure actGamesExecute(Sender: TObject);
+    procedure actParametrosExecute(Sender: TObject);
   private
     { Private declarations }
     procedure DefinirStatusBar;
@@ -43,7 +46,7 @@ implementation
 
 {$R *.dfm}
 
-uses untLoginView, untManagerView, udmConexao, untGamesView;
+uses untLoginView, untManagerView, udmConexao, untGamesView, untParametros;
 
 procedure TfrmPrincipal.actLoginExecute(Sender: TObject);
 begin
@@ -82,6 +85,14 @@ begin
     Application.CreateForm(TfrmGamesView, frmGamesView);
 
   frmGamesView.ShowModal;
+end;
+
+procedure TfrmPrincipal.actParametrosExecute(Sender: TObject);
+begin
+  if frmParametros = nil then
+     Application.CreateForm(TfrmParametros, frmParametros);
+
+  frmParametros.ShowModal;
 end;
 
 end.
