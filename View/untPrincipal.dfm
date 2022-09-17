@@ -2000,6 +2000,11 @@ object frmPrincipal: TfrmPrincipal
       Enabled = False
       OnExecute = actGamesExecute
     end
+    object actParametros: TAction
+      Category = 'Configura'#231#245'es'
+      Caption = 'Configura'#231#245'es'
+      OnExecute = actParametrosExecute
+    end
   end
   object MainMenu: TMainMenu
     Left = 544
@@ -2022,6 +2027,9 @@ object frmPrincipal: TfrmPrincipal
       object Logar1: TMenuItem
         Action = actLogin
       end
+    end
+    object Configuraes1: TMenuItem
+      Action = actParametros
     end
   end
 end
