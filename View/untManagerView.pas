@@ -67,8 +67,8 @@ begin
         ShowMessage('Gerente cadastrado com sucesso!');
 
     finally
-      FreeAndNil(vManager);
       FreeAndNil(vManagerControl);
+      FreeAndNil(vManager);
     end;
   end;
 end;

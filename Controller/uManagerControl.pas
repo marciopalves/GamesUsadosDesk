@@ -15,7 +15,7 @@ end;
 
 implementation
 
-Uses untUser, udmConexao, untUtils, untParametros,
+Uses untUser, udmConexao, untUtils,
      System.SysUtils, System.Classes, REST.Types,
      REST.JsonReflect,
      RESTRequest4D;
@@ -40,7 +40,6 @@ begin
                 .TokenBearer(DMConexao.Login.Token)
                 .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
                 .AddBody(pManager)
-                //.RaiseExceptionOn500(True)
                 .Post;
 
       result := vResp.StatusCode = 200;
@@ -53,7 +52,6 @@ begin
         raise Exception.Create('Erro acessar API '+e.ToString);
       end;
     end;
-
   end
   else
   begin

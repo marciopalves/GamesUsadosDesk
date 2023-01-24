@@ -15,7 +15,9 @@ uses
   untManagerView in 'View\untManagerView.pas' {frmManager},
   untUtils in 'Controller\untUtils.pas',
   untGamesView in 'View\untGamesView.pas' {frmGamesView},
-  untParametros in 'View\untParametros.pas' {frmParametros};
+  untParametros in 'View\untParametros.pas' {frmParametros},
+  frameGames in 'View\frameGames.pas' {frmGames: TFrame},
+  untGame in 'Model\untGame.pas';
 
 {$R *.res}
 
