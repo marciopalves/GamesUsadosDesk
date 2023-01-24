@@ -5,34 +5,31 @@ interface
 uses
   System.SysUtils, System.Classes, IdIOHandler, IdIOHandlerSocket,
   IdIOHandlerStack, IdSSL, IdSSLOpenSSL, IdBaseComponent, IdComponent,
-  IdTCPConnection, IdTCPClient, IdHTTP, IPPeerClient, REST.Client,
-  Data.Bind.Components, Data.Bind.ObjectScope, REST.Types,
-  REST.Authenticator.OAuth, untLogin;
+  IdTCPConnection, IdTCPClient, IdHTTP, IPPeerClient,
+  Data.Bind.Components, Data.Bind.ObjectScope,
+  System.IniFiles, Vcl.Forms, untLogin;
 
 type
   TDMConexao = class(TDataModule)
     IdHTTP: TIdHTTP;
     IdSSLIOHandlerSocketOpenSSL: TIdSSLIOHandlerSocketOpenSSL;
-    RESTClient: TRESTClient;
-    RESTRequest: TRESTRequest;
-    RESTResponse: TRESTResponse;
-    OAuth2Authenticator: TOAuth2Authenticator;
     procedure DataModuleCreate(Sender: TObject);
     procedure DataModuleDestroy(Sender: TObject);
+    procedure CarregarParametros;
   private
     FLogin: TLogin;
+    FBaseUrl: String;
+    Config: TIniFile;
     { Private declarations }
   public
     { Public declarations }
-    procedure InicializaRequest(const pUrl: String = '');
-    procedure ResetParametrosRequest;
     property Login: TLogin read FLogin Write FLogin;
+    Property BaseUrl: String Read FBaseUrl Write FBaseUrl;
   end;
 
 Const
   CHARSET_PADRAO = 'utf-8';
   CONTENT_TYPE_PADRAO = 'application/json';
-  BASE_URL = 'http://localhost:8080';
   MSG_URL_BASE = 'A url base não foi preenchida!';
 
 var
@@ -42,8 +39,17 @@ implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}
 
+uses untUtils;
 
 {$R *.dfm}
+
+procedure TDMConexao.CarregarParametros;
+begin
+  Config := TIniFile.Create(ExtractFilePath(Application.ExeName)+'Config.ini');
+  GerarLog('Carregar parametros ...');
+  BaseUrl := Config.ReadString('PARAMETROS', 'BASEURL', '');
+  GerarLog('BaseUrl .:'+BaseUrl);
+end;
 
 procedure TDMConexao.DataModuleCreate(Sender: TObject);
 begin
@@ -54,25 +60,8 @@ begin
   idhttp.Request.Charset    := 'UTF-8';
   IdHttp.IOHandler          := IdSSLIOHandlerSocketOpenSSL;
   idHttp.Request.BasicAuthentication := False;
-  //
-  InicializaRequest();
-end;
 
-procedure TDMConexao.InicializaRequest(const pUrl: String = '');
-begin
-  RESTRequest.Client    := RestClient;
-  RESTRequest.Response  := RESTResponse;
-  ResetParametrosRequest;
-
-  if pUrl <> '' then
-    RESTClient.BaseURL := pUrl;
-end;
-
-procedure TDMConexao.ResetParametrosRequest;
-begin
-  RestRequest.Params.Clear;
-//  RestRequest.Body.ClearBody;
-//  RestClient.Params.Clear;
+  CarregarParametros;
 end;
 
 procedure TDMConexao.DataModuleDestroy(Sender: TObject);

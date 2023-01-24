@@ -15,11 +15,12 @@ end;
 
 implementation
 
-Uses System.SysUtils, System.Classes, Rest.Json, REST.JsonReflect, untUser,
-     udmConexao, untUtils;
+Uses untUser, udmConexao, untUtils,
+     System.SysUtils, System.Classes,
+     Rest.Json, REST.JsonReflect;
 
 CONST
-  URL = 'http://localhost:8080/auth';
+  RESOURCE = '/auth';
 
 { TLoginControl }
 
@@ -52,10 +53,12 @@ end;
 
 function TLoginControl.LoginPost(const pEmail, pPassword: String): TLogin;
 Var
-  JsonStreamRetorno, JsonStreamEnvio: TStringStream;
+  JsonStreamRetorno,
+  JsonStreamEnvio: TStringStream;
   vMarshal: TJSONMarshal;
   vTextoJson: String;
   vUser: TUser;
+  vUrl: String;
 begin
   try
     vUser          := TUser.Create();
@@ -67,14 +70,19 @@ begin
 
     JsonStreamEnvio   := TStringStream.Create(vTextoJson);
     JsonStreamRetorno := TStringStream.Create('');
-    try
-      DMConexao.IdHTTP.Post(URL, JsonStreamEnvio, JsonStreamRetorno);
 
-      if (DMConexao.IdHTTP.ResponseCode = 200) then
-        Result := TJson.JsonToObject<TLogin>(UTF8ToString(PAnsiChar(AnsiString(JsonStreamRetorno.DataString))));
+    vUrl := (DMConexao.BaseUrl + RESOURCE);
+    if (vUrl <> EmptyStr) then
+    begin
+      try
+        DMConexao.IdHTTP.Post(vUrl, JsonStreamEnvio, JsonStreamRetorno);
 
-    except on E:exception do
-      raise Exception.Create('Erro acessar API '+e.ToString);
+        if (DMConexao.IdHTTP.ResponseCode = 200) then
+          Result := TJson.JsonToObject<TLogin>(UTF8ToString(PAnsiChar(AnsiString(JsonStreamRetorno.DataString))));
+
+        except on E:exception do
+          raise Exception.Create('Erro acessar API '+e.ToString);
+        end;
     end;
 
   finally

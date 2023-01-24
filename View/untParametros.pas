@@ -13,7 +13,6 @@ type
     bSalvar: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure bSalvarClick(Sender: TObject);
-    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     Config: TIniFile;
@@ -37,10 +36,6 @@ uses untUtils;
 procedure TfrmParametros.FormCreate(Sender: TObject);
 begin
   Config := TIniFile.Create(ExtractFilePath(Application.ExeName)+'Config.ini');
-end;
-
-procedure TfrmParametros.FormShow(Sender: TObject);
-begin
   CarregaParametros;
 end;
 

@@ -7,10 +7,10 @@
     <Transaction>2022/08/11 15:02:17.000.030,C:\Users\Marcio\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\projetos\ufg\GamesUsadosDesk\GamesUsadosDeskNew.dproj</Transaction>
     <Transaction>2022/08/11 15:02:49.000.519,=C:\projetos\ufg\GamesUsadosDesk\Controller\udmConexao.pas</Transaction>
     <Transaction>2022/08/11 15:03:04.000.410,=C:\projetos\ufg\GamesUsadosDesk\View\untPrincipal.pas</Transaction>
-    <Transaction>2022/08/11 15:03:58.000.706,=C:\projetos\ufg\GamesUsadosDesk\Controller\uILogin.pas</Transaction>
+    <Transaction>2022/08/11 15:03:58.000.797,=C:\projetos\ufg\GamesUsadosDesk\Controller\uManagerControl.pas</Transaction>
     <Transaction>2022/08/11 15:03:58.000.723,=C:\projetos\ufg\GamesUsadosDesk\Controller\UIManager.pas</Transaction>
     <Transaction>2022/08/11 15:03:58.000.737,=C:\projetos\ufg\GamesUsadosDesk\Controller\uLoginControl.pas</Transaction>
-    <Transaction>2022/08/11 15:03:58.000.797,=C:\projetos\ufg\GamesUsadosDesk\Controller\uManagerControl.pas</Transaction>
+    <Transaction>2022/08/11 15:03:58.000.706,=C:\projetos\ufg\GamesUsadosDesk\Controller\uILogin.pas</Transaction>
     <Transaction>2022/08/11 15:03:58.000.809,=C:\projetos\ufg\GamesUsadosDesk\Controller\untUtils.pas</Transaction>
     <Transaction>2022/08/11 15:04:09.000.865,=C:\projetos\ufg\GamesUsadosDesk\Model\untUser.pas</Transaction>
     <Transaction>2022/08/11 15:04:09.000.856,=C:\projetos\ufg\GamesUsadosDesk\Model\untManager.pas</Transaction>
@@ -28,8 +28,8 @@
     <Transaction>2022/09/08 15:03:32.000.757,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
     <Transaction>2022/09/08 15:04:01.000.785,C:\projetos\ufg\GamesUsadosDesk\Unit1.dfm=C:\projetos\ufg\GamesUsadosDesk\Controller\udmManager.dfm</Transaction>
     <Transaction>2022/09/08 15:04:01.000.785,C:\projetos\ufg\GamesUsadosDesk\Unit1.pas=C:\projetos\ufg\GamesUsadosDesk\Controller\udmManager.pas</Transaction>
-    <Transaction>2022/09/16 07:27:29.771,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
-    <Transaction>2022/09/16 07:33:16.523,C:\projetos\ufg\GamesUsadosDesk\View\untParametros.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
-    <Transaction>2022/09/16 07:33:16.523,C:\projetos\ufg\GamesUsadosDesk\View\untParametros.dfm=C:\projetos\ufg\GamesUsadosDesk\Unit1.dfm</Transaction>
+    <Transaction>2022/09/16 07:27:29.000.771,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
+    <Transaction>2022/09/16 07:33:16.000.523,C:\projetos\ufg\GamesUsadosDesk\View\untParametros.dfm=C:\projetos\ufg\GamesUsadosDesk\Unit1.dfm</Transaction>
+    <Transaction>2022/09/16 07:33:16.000.523,C:\projetos\ufg\GamesUsadosDesk\View\untParametros.pas=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
   </Transactions>
 </BorlandProject>
