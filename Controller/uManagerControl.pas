@@ -15,58 +15,55 @@ end;
 
 implementation
 
-Uses System.SysUtils, System.Classes, System.JSON, Rest.Json, REST.JsonReflect,
-     Rest.Types, untUser, udmConexao, untUtils, REST.Authenticator.OAuth;
+Uses untUser, udmConexao, untUtils, untParametros,
+     System.SysUtils, System.Classes, REST.Types,
+     REST.JsonReflect,
+     RESTRequest4D;
 
 CONST
-  URL = 'http://localhost:8080/users/register/manager';
+  RESOURCE = '/users/register/manager';
 
 { TManagerControl }
 
 function TManagerControl.Criar(const pManager: TManager): Boolean;
 Var
-  JsonStreamEnvio: TStringStream;
-  JsonEnvio: TJsonObject;
-  JsonValue: TJSonValue;
-  vMarshal: TJSONMarshal;
-  vTextoJson: String;
+  vResp: IResponse;
 begin
-  try
-    vMarshal   := TJSONMarshal.Create (TJSONConverter.Create);
-//    vTextoJson := vMarshal.Marshal(pManager).ToString();
-//    JsonStreamEnvio   := TStringStream.Create(vTextoJson);
-
-    JsonEnvio := TJSONObject.Create;
-    JsonEnvio.AddPair('Name',     pManager.Name);
-    JsonEnvio.AddPair('Phone',    pManager.Phone);
-    JsonEnvio.AddPair('Email',    pManager.Email);
-    JsonEnvio.AddPair('Password', pManager.Password);
-
-    DMConexao.InicializaRequest(URL);
-    DMConexao.OAuth2Authenticator.TokenType   := TOAuth2TokenType.ttBEARER;
-    DMConexao.OAuth2Authenticator.AccessToken := DMConexao.Login.Token;
-
-    DMConexao.RestRequest.Method := rmPOST;
-    //DMConexao.RestRequest.AddBody(JsonStreamEnvio);
-    DMConexao.RestRequest.AddBody(JsonEnvio);
+  if (DMConexao.Login.Token <> EmptyStr) And
+     (DMConexao.BaseUrl <> EmptyStr) And
+     (pManager <> Nil) then
+  begin
     try
-      DMConexao.RESTRequest.Execute;
+      vResp := TRequest.New
+                .BaseURL(DMConexao.BaseUrl)
+                .Resource(RESOURCE)
+                .TokenBearer(DMConexao.Login.Token)
+                .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
+                .AddBody(pManager)
+                //.RaiseExceptionOn500(True)
+                .Post;
 
-      Result := DMConexao.RESTResponse.StatusCode = 200;
+      result := vResp.StatusCode = 200;
 
     except on E:exception do
       begin
         Result := False;
         GerarLog('Erro ao acessar endpoint criar Gerente - '+e.ToString+
-                  sLineBreak+'URL.:'+URL+' - '+vTextoJson);
+                  sLineBreak+'URL.:'+DMConexao.BaseUrl+RESOURCE);
         raise Exception.Create('Erro acessar API '+e.ToString);
       end;
     end;
 
-  finally
-    vMarshal.Free;
-    JsonStreamEnvio.Free;
+  end
+  else
+  begin
+    GerarLog('Informações insuficientes para acessar API.'+
+             ' - BaseUrl.:'+DMConexao.BaseUrl+ sLineBreak+
+             ' - Token.:'+DMConexao.Login.Token+ sLineBreak+
+             ' - JSON.:'+pManager.ToString);
+    raise Exception.Create('Erro informações insuficientes para acessar API.');
   end;
+
 end;
 
 end.

@@ -15,7 +15,6 @@ uses
   untManagerView in 'View\untManagerView.pas' {frmManager},
   untUtils in 'Controller\untUtils.pas',
   untGamesView in 'View\untGamesView.pas' {frmGamesView},
-  udmManager in 'Controller\udmManager.pas' {DMManager: TDataModule},
   untParametros in 'View\untParametros.pas' {frmParametros};
 
 {$R *.res}
@@ -25,7 +24,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDMConexao, DMConexao);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TDMManager, DMManager);
-  Application.CreateForm(TfrmParametros, frmParametros);
   Application.Run;
 end.
