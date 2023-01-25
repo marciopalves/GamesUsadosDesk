@@ -8,7 +8,6 @@ interface
       FEmail: String;
       FPhone: String;
       FPassword: String;
-      FTipo: String;
 
     public
       property Name: String  read FName write FName;

@@ -24,7 +24,6 @@ object frmLogin: TfrmLogin
     Color = clSilver
     ParentBackground = False
     TabOrder = 0
-    ExplicitHeight = 237
     object lblEmail: TLabel
       Left = 106
       Top = 15
@@ -57,7 +56,6 @@ object frmLogin: TfrmLogin
       Width = 193
       Height = 21
       TabOrder = 0
-      Text = 'admin@admin.com'
     end
     object edtPassword: TEdit
       Left = 48
@@ -66,7 +64,6 @@ object frmLogin: TfrmLogin
       Height = 21
       PasswordChar = '*'
       TabOrder = 1
-      Text = '123456'
     end
     object bbConfirmar: TBitBtn
       Left = 16
@@ -98,6 +95,20 @@ object frmLogin: TfrmLogin
       ModalResult = 2
       ParentFont = False
       TabOrder = 3
+    end
+  end
+  object ActionList: TActionList
+    Left = 248
+    Top = 80
+    object actAdmin: TAction
+      Caption = 'actAdmin'
+      ShortCut = 32880
+      OnExecute = actAdminExecute
+    end
+    object actClear: TAction
+      Caption = 'actClear'
+      ShortCut = 27
+      OnExecute = actClearExecute
     end
   end
 end

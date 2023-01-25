@@ -99,11 +99,12 @@ object frmManager: TfrmManager
       Font.Style = []
       ParentFont = False
       TabOrder = 0
+      Text = 'Jose Emanuel da Silva'
     end
     object edtMaskTel: TMaskEdit
       Left = 32
       Top = 95
-      Width = 127
+      Width = 125
       Height = 22
       EditMask = '(99) 99999-9999'
       Font.Charset = DEFAULT_CHARSET
@@ -114,7 +115,7 @@ object frmManager: TfrmManager
       MaxLength = 15
       ParentFont = False
       TabOrder = 1
-      Text = '(  )      -    '
+      Text = '(62)      -    '
     end
     object edtEmail: TEdit
       Left = 32
@@ -128,6 +129,7 @@ object frmManager: TfrmManager
       Font.Style = []
       ParentFont = False
       TabOrder = 3
+      Text = 'joseemaneuldasilva@bol.com.br'
     end
     object edtPassword: TEdit
       Left = 376
@@ -142,6 +144,7 @@ object frmManager: TfrmManager
       ParentFont = False
       PasswordChar = '*'
       TabOrder = 4
+      Text = '123456'
     end
     object cbbUserType: TComboBox
       Left = 196
@@ -199,6 +202,20 @@ object frmManager: TfrmManager
       ModalResult = 2
       ParentFont = False
       TabOrder = 1
+    end
+  end
+  object ActionList: TActionList
+    Left = 456
+    Top = 24
+    object actAutoCad: TAction
+      Caption = 'actAutoCad'
+      ShortCut = 32880
+      OnExecute = actAutoCadExecute
+    end
+    object actClear: TAction
+      Caption = 'actClear'
+      ShortCut = 27
+      OnExecute = actClearExecute
     end
   end
 end

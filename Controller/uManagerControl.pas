@@ -15,41 +15,53 @@ end;
 
 implementation
 
-Uses System.SysUtils, System.Classes, Rest.Json,
-     REST.JsonReflect, untPrincipal, untUser, udmConexao;
+Uses untUser, udmConexao, untUtils,
+     System.SysUtils, System.Classes, REST.Types,
+     REST.JsonReflect,
+     RESTRequest4D;
 
 CONST
-  URL = 'http://localhost:8080/users/register/manager';
+  RESOURCE = '/users/register/manager';
 
 { TManagerControl }
 
 function TManagerControl.Criar(const pManager: TManager): Boolean;
 Var
-  JsonStreamRetorno, JsonStreamEnvio: TStringStream;
-  vMarshal: TJSONMarshal;
-  vTextoJson: String;
+  vResp: IResponse;
 begin
-  try
-    DMConexao.IdHTTP.Request.CustomHeaders.Add('Authorization=Bearer '+frmPrincipal.vLogin.Token);
-
-    vMarshal   := TJSONMarshal.Create (TJSONConverter.Create);
-    vTextoJson := vMarshal.Marshal(pManager).ToString();
-
-    JsonStreamEnvio   := TStringStream.Create(vTextoJson);
-    JsonStreamRetorno := TStringStream.Create('');
+  if (DMConexao.Login.Token <> EmptyStr) And
+     (DMConexao.BaseUrl <> EmptyStr) And
+     (pManager <> Nil) then
+  begin
     try
-      DMConexao.IdHTTP.Post(URL, JsonStreamEnvio, JsonStreamRetorno);
-      Result := DMConexao.IdHTTP.ResponseCode = 200;
+      vResp := TRequest.New
+                .BaseURL(DMConexao.BaseUrl)
+                .Resource(RESOURCE)
+                .TokenBearer(DMConexao.Login.Token)
+                .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
+                .AddBody(pManager)
+                .Post;
+
+      result := vResp.StatusCode = 200;
 
     except on E:exception do
-      raise Exception.Create('Erro acessar API '+e.ToString);
+      begin
+        Result := False;
+        GerarLog('Erro ao acessar endpoint criar Gerente - '+e.ToString+
+                  sLineBreak+'URL.:'+DMConexao.BaseUrl+RESOURCE);
+        raise Exception.Create('Erro acessar API '+e.ToString);
+      end;
     end;
-
-  finally
-    vMarshal.Free;
-    JsonStreamEnvio.Free;
-    JsonStreamRetorno.Free;
+  end
+  else
+  begin
+    GerarLog('Informações insuficientes para acessar API.'+
+             ' - BaseUrl.:'+DMConexao.BaseUrl+ sLineBreak+
+             ' - Token.:'+DMConexao.Login.Token+ sLineBreak+
+             ' - JSON.:'+pManager.ToString);
+    raise Exception.Create('Erro informações insuficientes para acessar API.');
   end;
+
 end;
 
 end.

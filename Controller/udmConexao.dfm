@@ -1,10 +1,11 @@
 object DMConexao: TDMConexao
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Height = 174
-  Width = 274
+  OnDestroy = DataModuleDestroy
+  Height = 177
+  Width = 282
   object IdHTTP: TIdHTTP
-    AllowCookies = True
+    HandleRedirects = True
     ProxyParams.BasicAuthentication = False
     ProxyParams.ProxyPort = 0
     Request.ContentLength = -1

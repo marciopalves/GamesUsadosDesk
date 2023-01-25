@@ -16,7 +16,7 @@ type
     MainMenu: TMainMenu;
     Cadastro1: TMenuItem;
     CadastrodeGerentes1: TMenuItem;
-    actAnuncios: TAction;
+    actGames: TAction;
     Image1: TImage;
     StatusBar: TStatusBar;
     pnlTopo: TPanel;
@@ -24,16 +24,17 @@ type
     Logar3: TMenuItem;
     Logar4: TMenuItem;
     Logar1: TMenuItem;
-    procedure FormCreate(Sender: TObject);
+    actParametros: TAction;
+    Configuraes1: TMenuItem;
     procedure actLoginExecute(Sender: TObject);
     procedure actGerentesExecute(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure actGamesExecute(Sender: TObject);
+    procedure actParametrosExecute(Sender: TObject);
   private
     { Private declarations }
     procedure DefinirStatusBar;
   public
     { Public declarations }
-    vLogin: TLogin;
     procedure HabilitarDesabilitarMenus;
   end;
 
@@ -45,17 +46,7 @@ implementation
 
 {$R *.dfm}
 
-uses untLoginView, untManagerView;
-
-procedure TfrmPrincipal.FormCreate(Sender: TObject);
-begin
-  vLogin := TLogin.Create;
-end;
-
-procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  vLogin.Free;
-end;
+uses untLoginView, untManagerView, udmConexao, untGamesView, untParametros;
 
 procedure TfrmPrincipal.actLoginExecute(Sender: TObject);
 begin
@@ -68,16 +59,16 @@ end;
 
 procedure TfrmPrincipal.HabilitarDesabilitarMenus;
 begin
-  actLogin.Enabled    := vLogin.Token = '';
-  actDeslogar.Enabled := vLogin.Token <> '';
-  actGerentes.Enabled := (vLogin.Token <> '') And (vLogin.UserType = 'ADMIN');
-  actAnuncios.Enabled := vLogin.Token <> '';
+  actLogin.Enabled    := DMConexao.Login.Token = '';
+  actDeslogar.Enabled := DMConexao.Login.Token <> '';
+  actGerentes.Enabled := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
+  actGames.Enabled    := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
   DefinirStatusBar;
 end;
 
 procedure TfrmPrincipal.DefinirStatusBar;
 begin
-  StatusBar.panels[0].Text := vLogin.Tipo;
+  StatusBar.panels[0].Text := DMConexao.Login.Tipo;
 end;
 
 procedure TfrmPrincipal.actGerentesExecute(Sender: TObject);
@@ -86,6 +77,22 @@ begin
     Application.CreateForm(TfrmManager, frmManager);
 
   frmManager.ShowModal;
+end;
+
+procedure TfrmPrincipal.actGamesExecute(Sender: TObject);
+begin
+  if frmGamesView = nil then
+    Application.CreateForm(TfrmGamesView, frmGamesView);
+
+  frmGamesView.ShowModal;
+end;
+
+procedure TfrmPrincipal.actParametrosExecute(Sender: TObject);
+begin
+  if frmParametros = nil then
+     Application.CreateForm(TfrmParametros, frmParametros);
+
+  frmParametros.ShowModal;
 end;
 
 end.

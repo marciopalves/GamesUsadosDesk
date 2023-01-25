@@ -13,8 +13,6 @@ object frmPrincipal: TfrmPrincipal
   Menu = MainMenu
   OldCreateOrder = False
   Position = poDesktopCenter
-  OnClose = FormClose
-  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
@@ -1968,9 +1966,6 @@ object frmPrincipal: TfrmPrincipal
         Text = 'Usu'#225'rio'
         Width = 200
       end>
-    ExplicitLeft = 176
-    ExplicitTop = 312
-    ExplicitWidth = 0
   end
   object pnlTopo: TPanel
     Left = 0
@@ -1996,11 +1991,19 @@ object frmPrincipal: TfrmPrincipal
     object actGerentes: TAction
       Category = 'Cadastros'
       Caption = 'Cadastro de &Gerentes'
+      Enabled = False
       OnExecute = actGerentesExecute
     end
-    object actAnuncios: TAction
+    object actGames: TAction
       Category = 'Cadastros'
-      Caption = '&An'#250'ncios'
+      Caption = '&Games'
+      Enabled = False
+      OnExecute = actGamesExecute
+    end
+    object actParametros: TAction
+      Category = 'Configura'#231#245'es'
+      Caption = 'Configura'#231#245'es'
+      OnExecute = actParametrosExecute
     end
   end
   object MainMenu: TMainMenu
@@ -2013,7 +2016,7 @@ object frmPrincipal: TfrmPrincipal
         Hint = 'Apenas usu'#225'rios Admin podem acessar '
       end
       object Anncios1: TMenuItem
-        Action = actAnuncios
+        Action = actGames
       end
     end
     object Logar3: TMenuItem
@@ -2024,6 +2027,9 @@ object frmPrincipal: TfrmPrincipal
       object Logar1: TMenuItem
         Action = actLogin
       end
+    end
+    object Configuraes1: TMenuItem
+      Action = actParametros
     end
   end
 end
