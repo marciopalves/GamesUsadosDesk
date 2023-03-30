@@ -42,11 +42,12 @@ Const
 procedure TDMGames.ListarGames;
 begin
   TRequest.New
-   .BaseURL(DMConexao.BaseUrl)
-   .Resource(RESOURCE)
-   .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
-   .DataSetAdapter(mtGames)
-   .Get;
+       .BaseURL(DMConexao.BaseUrl)
+       .Resource(RESOURCE)
+       .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
+       .DataSetAdapter(mtGames)
+       .Get;
+
 end;
 
 end.

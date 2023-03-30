@@ -72,7 +72,7 @@ end;
 
 procedure TfrmLogin.actGerenteExecute(Sender: TObject);
 begin
-  edtEmail.Text    := 'joseemanueldasilva@bol.com.br';
+  edtEmail.Text    := 'manager@manager.com';
   edtPassword.Text := '123456';
 end;
 
