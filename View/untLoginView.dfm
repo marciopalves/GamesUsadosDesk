@@ -110,5 +110,10 @@ object frmLogin: TfrmLogin
       ShortCut = 27
       OnExecute = actClearExecute
     end
+    object actGerente: TAction
+      Caption = 'actGerente'
+      ShortCut = 32881
+      OnExecute = actGerenteExecute
+    end
   end
 end

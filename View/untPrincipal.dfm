@@ -13,6 +13,7 @@ object frmPrincipal: TfrmPrincipal
   Menu = MainMenu
   OldCreateOrder = False
   Position = poDesktopCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage
@@ -1953,8 +1954,7 @@ object frmPrincipal: TfrmPrincipal
       8AF7C470C7E5C6B2A2E303118C81F5A963BFF1302087B9C8E84A8CD1ED69AEA2
       688AE6C35DFB3BF9D6F2045FBC4E38ADBF0E3B8D2537FF0078E3359E6F3C4371
       BA398C9B5FEF7C839CD6EE950341A7A4722E1813C115C18EA91947DD608FFFD9}
-    ExplicitTop = 36
-    ExplicitHeight = 326
+    ExplicitTop = 25
   end
   object StatusBar: TStatusBar
     Left = 0
@@ -1977,8 +1977,8 @@ object frmPrincipal: TfrmPrincipal
     TabOrder = 1
   end
   object ActionList: TActionList
-    Left = 544
-    Top = 264
+    Left = 392
+    Top = 248
     object actLogin: TAction
       Category = 'Login'
       Caption = 'Login'
@@ -2005,10 +2005,19 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Configura'#231#245'es'
       OnExecute = actParametrosExecute
     end
+    object actAnuncios: TAction
+      Category = 'Cadastros'
+      Caption = '&An'#250'ncios'
+    end
+    object actPlataformas: TAction
+      Category = 'Cadastros'
+      Caption = 'Plataformas'
+      OnExecute = actPlataformasExecute
+    end
   end
   object MainMenu: TMainMenu
-    Left = 544
-    Top = 200
+    Left = 392
+    Top = 168
     object Cadastro1: TMenuItem
       Caption = '&Cadastros'
       object CadastrodeGerentes1: TMenuItem
@@ -2017,6 +2026,12 @@ object frmPrincipal: TfrmPrincipal
       end
       object Anncios1: TMenuItem
         Action = actGames
+      end
+      object Anncios2: TMenuItem
+        Action = actAnuncios
+      end
+      object Plataformas2: TMenuItem
+        Action = actPlataformas
       end
     end
     object Logar3: TMenuItem

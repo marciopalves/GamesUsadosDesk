@@ -26,10 +26,16 @@ type
     Logar1: TMenuItem;
     actParametros: TAction;
     Configuraes1: TMenuItem;
+    actAnuncios: TAction;
+    Anncios2: TMenuItem;
+    actPlataformas: TAction;
+    Plataformas2: TMenuItem;
     procedure actLoginExecute(Sender: TObject);
     procedure actGerentesExecute(Sender: TObject);
     procedure actGamesExecute(Sender: TObject);
     procedure actParametrosExecute(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure actPlataformasExecute(Sender: TObject);
   private
     { Private declarations }
     procedure DefinirStatusBar;
@@ -46,7 +52,13 @@ implementation
 
 {$R *.dfm}
 
-uses untLoginView, untManagerView, udmConexao, untGamesView, untParametros;
+uses  untLoginView, untManagerView, udmConexao, untGamesView, untParametros,
+      untPlataformasView;
+
+procedure TfrmPrincipal.FormShow(Sender: TObject);
+begin
+  HabilitarDesabilitarMenus;
+end;
 
 procedure TfrmPrincipal.actLoginExecute(Sender: TObject);
 begin
@@ -59,16 +71,20 @@ end;
 
 procedure TfrmPrincipal.HabilitarDesabilitarMenus;
 begin
-  actLogin.Enabled    := DMConexao.Login.Token = '';
-  actDeslogar.Enabled := DMConexao.Login.Token <> '';
-  actGerentes.Enabled := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
-  actGames.Enabled    := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
   DefinirStatusBar;
+  actLogin.Enabled       := True;
+  actDeslogar.Enabled    := DMConexao.Login.Token <> '';
+  actGerentes.Enabled    := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
+  actGames.Enabled       := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
+  actPlataformas.Enabled := True;
+  actAnuncios.Enabled    := True;
 end;
 
 procedure TfrmPrincipal.DefinirStatusBar;
 begin
-  StatusBar.panels[0].Text := DMConexao.Login.Tipo;
+  if DMConexao.Login.UserType <> '' then
+    StatusBar.panels[0].Text := 'Usuário.: '+ DMConexao.Login.UserType
+  else StatusBar.panels[0].Text := 'Usuário.: Não conectado';
 end;
 
 procedure TfrmPrincipal.actGerentesExecute(Sender: TObject);
@@ -93,6 +109,14 @@ begin
      Application.CreateForm(TfrmParametros, frmParametros);
 
   frmParametros.ShowModal;
+end;
+
+procedure TfrmPrincipal.actPlataformasExecute(Sender: TObject);
+begin
+  if frmPlataformas = Nil then
+     Application.CreateForm(TfrmPlataformas, frmPlataformas);
+
+  frmPlataformas.ShowModal;
 end;
 
 end.
