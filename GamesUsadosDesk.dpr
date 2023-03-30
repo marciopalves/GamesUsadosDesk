@@ -16,8 +16,11 @@ uses
   untUtils in 'Controller\untUtils.pas',
   untGamesView in 'View\untGamesView.pas' {frmGamesView},
   untParametros in 'View\untParametros.pas' {frmParametros},
-  frameGames in 'View\frameGames.pas' {frmGames: TFrame},
-  untGame in 'Model\untGame.pas';
+  untAnunciosView in 'View\untAnunciosView.pas' {frmAnuncios},
+  untPlataforma in 'Model\untPlataforma.pas',
+  udmPlataforma in 'Controller\udmPlataforma.pas' {DMPlataforma: TDataModule},
+  udmGames in 'Controller\udmGames.pas' {DMGames: TDataModule},
+  untPlataformasView in 'View\untPlataformasView.pas' {frmPlataformas};
 
 {$R *.res}
 
@@ -26,5 +29,6 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDMConexao, DMConexao);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
+  Application.CreateForm(TfrmPlataformas, frmPlataformas);
   Application.Run;
 end.

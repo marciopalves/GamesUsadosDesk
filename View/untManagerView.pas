@@ -68,7 +68,7 @@ begin
 
     finally
       FreeAndNil(vManagerControl);
-      FreeAndNil(vManager);
+      //FreeAndNil(vManager);
     end;
   end;
 end;

@@ -19,9 +19,11 @@ type
     ActionList: TActionList;
     actAdmin: TAction;
     actClear: TAction;
+    actGerente: TAction;
     procedure bbConfirmarClick(Sender: TObject);
     procedure actAdminExecute(Sender: TObject);
     procedure actClearExecute(Sender: TObject);
+    procedure actGerenteExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,6 +67,12 @@ end;
 procedure TfrmLogin.actAdminExecute(Sender: TObject);
 begin
   edtEmail.Text    := 'admin@admin.com';
+  edtPassword.Text := '123456';
+end;
+
+procedure TfrmLogin.actGerenteExecute(Sender: TObject);
+begin
+  edtEmail.Text    := 'joseemanueldasilva@bol.com.br';
   edtPassword.Text := '123456';
 end;
 

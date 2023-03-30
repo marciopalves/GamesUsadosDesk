@@ -6,28 +6,19 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.ExtCtrls,
-  REST.Response.Adapter, Vcl.StdCtrls, Vcl.ComCtrls, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client, REST.Types, REST.Client, Data.Bind.Components,
-  Data.Bind.ObjectScope, System.Rtti, System.Bindings.Outputs, Vcl.Bind.Editors,
+  Vcl.StdCtrls, Vcl.ComCtrls, FireDAC.Stan.Intf,
   Data.Bind.EngExt, Vcl.Bind.DBEngExt, Data.Bind.DBScope, Vcl.DBGrids,
-  Vcl.Bind.Grid, Data.Bind.Grid;
+  Vcl.Bind.Grid, Data.Bind.Grid, Data.DB;
 
 type
   TfrmGamesView = class(TForm)
     pnlGrid: TPanel;
     pnlBotoes: TPanel;
     btnPesqGames: TButton;
-    FDMemGames: TFDMemTable;
-    mmGames: TMemo;
-    FDMemGamesId: TIntegerField;
-    FDMemGamesTitle: TStringField;
-    FDMemGamesPlataforma: TStringField;
-    FDMemGamesImage: TStringField;
-    dsGames: TDataSource;
     dbgGames: TDBGrid;
     procedure btnPesqGamesClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     procedure CarregarGamesApi;
@@ -41,12 +32,9 @@ var
 
 implementation
 
-Uses udmConexao, untUtils, RESTRequest4D, Rest.JSON, System.JSON;
+Uses udmConexao, udmGames, untUtils;
 
 {$R *.dfm}
-
-CONST
-  RESOURCE = '/games?page=0';
 
 procedure TfrmGamesView.btnPesqGamesClick(Sender: TObject);
 begin
@@ -54,30 +42,16 @@ begin
 end;
 
 procedure TfrmGamesView.CarregarGamesApi;
-Var
-  vResp: IResponse;
-  vJson: TJsonValue;
 begin
   if (DMConexao.BaseUrl <> EmptyStr) then
   begin
     try
-      vResp := TRequest.New.BaseUrl(DMConexao.BaseUrl).RESOURCE(RESOURCE)
-        .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
-        .DataSetAdapter(FDMemGames).GET;
-
-      if vResp.StatusCode = 200 then
-      begin
-        GerarLog(' Listar Games sucess');
-        vJson := TJSONObject.ParseJSONValue(vResp.Content) as TJSONValue;
-        mmGames.Lines.Clear;
-        mmGames.Lines.Add(TJson.Format(vJson));
-      end;
+      DMGames.ListarGames;
 
     except
       on E: exception do
       begin
-        GerarLog('Erro ao acessar endpoint criar Gerente - ' + E.ToString +
-          sLineBreak + 'URL.:' + DMConexao.BaseUrl + RESOURCE);
+        GerarLog('Erro ao acessar endpoint games - ' + E.ToString);
         raise exception.Create('Erro acessar API ' + E.ToString);
       end;
     end;
@@ -94,6 +68,21 @@ end;
 procedure TfrmGamesView.CarregarGamesBancoDados;
 begin
   //
+end;
+
+procedure TfrmGamesView.FormCreate(Sender: TObject);
+begin
+  if DMGames = Nil then
+    Application.CreateForm(TDMGames, DMGames);
+end;
+
+procedure TfrmGamesView.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  if DMGames <> Nil then
+  begin
+    DmGames.mtGames.Close;
+    DMGames.Free;
+  end;
 end;
 
 end.
