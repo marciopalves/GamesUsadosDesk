@@ -20,7 +20,9 @@ uses
   untPlataforma in 'Model\untPlataforma.pas',
   udmPlataforma in 'Controller\udmPlataforma.pas' {DMPlataforma: TDataModule},
   udmGames in 'Controller\udmGames.pas' {DMGames: TDataModule},
-  untPlataformasView in 'View\untPlataformasView.pas' {frmPlataformas};
+  untPlataformasView in 'View\untPlataformasView.pas' {frmPlataformas},
+  udmAnuncios in 'Controller\udmAnuncios.pas' {DMAnuncios: TDataModule},
+  untGame in 'untGame.pas';
 
 {$R *.res}
 
@@ -30,5 +32,6 @@ begin
   Application.CreateForm(TDMConexao, DMConexao);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmPlataformas, frmPlataformas);
+  Application.CreateForm(TDMAnuncios, DMAnuncios);
   Application.Run;
 end.

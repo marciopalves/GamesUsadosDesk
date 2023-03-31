@@ -75,7 +75,7 @@ begin
   actLogin.Enabled       := True;
   actDeslogar.Enabled    := DMConexao.Login.Token <> '';
   actGerentes.Enabled    := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
-  actGames.Enabled       := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
+  actGames.Enabled       := True;//(DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
   actPlataformas.Enabled := True;
   actAnuncios.Enabled    := True;
 end;

@@ -59,7 +59,6 @@ begin
       vResp := TRequest.New
                   .BaseURL(DMConexao.BaseUrl)
                   .Resource(RESOURCE_CRIAR + pNome)
-                  //.ResourceSuffix(pNome)
                   .TokenBearer(DMConexao.Login.Token)
                   .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
                   .Post;

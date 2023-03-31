@@ -26,6 +26,7 @@ object frmPlataformas: TfrmPlataformas
       Top = 1
       Width = 367
       Height = 329
+      Hint = 'Apenas Gerentes podem incluir registro'
       Align = alClient
       DataSource = DMGames.dsGames
       TabOrder = 0

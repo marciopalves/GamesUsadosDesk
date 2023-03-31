@@ -7,6 +7,7 @@ uses
 
   function ApenasNumerosString(const pTexto: String): String;
   function ValidarEmail(const pEmail: String): Boolean;
+  function RetornaDepois(const pCaracter: String; const pTexto: String):String;
 
   procedure GerarLog(const Operacao: String);
 
@@ -80,4 +81,20 @@ begin
   end;
 end;
 
+function RetornaDepois(const pCaracter:String; const pTexto: String):String;
+Var
+  vPosicao: Integer;
+  vNew: String;
+begin
+  vPosicao := Pos(pCaracter, pTexto)+1;
+  vNew := Copy(pTexto, vPosicao, Length(pTexto));
+  if StrToIntDef(vNew, 0)<= 0 then
+  begin
+    Delete(vNew, 1, 1);
+    Delete(vNew, Length(vNew), 1);
+  end;
+  result := vNew;
+end;
+
 end.
+

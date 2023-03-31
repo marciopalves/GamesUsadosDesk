@@ -140,6 +140,12 @@
             <Form>frmPlataformas</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="Controller\udmAnuncios.pas">
+            <Form>DMAnuncios</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="untGame.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

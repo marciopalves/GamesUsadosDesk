@@ -27,7 +27,7 @@ object frmGamesView: TfrmGamesView
       Width = 601
       Height = 356
       Align = alClient
-      DataSource = DMGames.dsGames
+      DataSource = dsGames
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -38,25 +38,25 @@ object frmGamesView: TfrmGamesView
         item
           Expanded = False
           FieldName = 'Id'
-          Width = 34
+          Width = 43
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Title'
-          Width = 152
+          Width = 119
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'Plataform'
-          Width = 159
+          FieldName = 'Plataforma'
+          Width = 124
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Image'
-          Width = 131
+          Width = 185
           Visible = True
         end>
     end
@@ -68,7 +68,7 @@ object frmGamesView: TfrmGamesView
     Height = 358
     Align = alRight
     TabOrder = 1
-    ExplicitHeight = 248
+    ExplicitLeft = 495
     object btnPesqGames: TButton
       Left = 14
       Top = 112
@@ -79,5 +79,34 @@ object frmGamesView: TfrmGamesView
       TabOrder = 0
       OnClick = btnPesqGamesClick
     end
+  end
+  object cdsGames: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 536
+    Top = 176
+    object cdsGamesId: TIntegerField
+      FieldName = 'Id'
+    end
+    object cdsGamesTitle: TStringField
+      DisplayWidth = 80
+      FieldName = 'Title'
+      Size = 80
+    end
+    object cdsGamesPlataforma: TStringField
+      DisplayWidth = 60
+      FieldName = 'Plataforma'
+      Size = 60
+    end
+    object cdsGamesImage: TStringField
+      DisplayWidth = 120
+      FieldName = 'Image'
+      Size = 120
+    end
+  end
+  object dsGames: TDataSource
+    DataSet = cdsGames
+    Left = 536
+    Top = 232
   end
 end
