@@ -22,7 +22,9 @@ uses
   udmGames in 'Controller\udmGames.pas' {DMGames: TDataModule},
   untPlataformasView in 'View\untPlataformasView.pas' {frmPlataformas},
   udmAnuncios in 'Controller\udmAnuncios.pas' {DMAnuncios: TDataModule},
-  untGame in 'untGame.pas';
+  untGame in 'untGame.pas',
+  udmUsers in 'Controller\udmUsers.pas' {DMUsers: TDataModule},
+  untUsuersView in 'View\untUsuersView.pas' {frmUsers};
 
 {$R *.res}
 
@@ -31,7 +33,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TDMConexao, DMConexao);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
-  Application.CreateForm(TfrmPlataformas, frmPlataformas);
-  Application.CreateForm(TDMAnuncios, DMAnuncios);
   Application.Run;
 end.

@@ -1995,7 +1995,7 @@ object frmPrincipal: TfrmPrincipal
       OnExecute = actGerentesExecute
     end
     object actGames: TAction
-      Category = 'Cadastros'
+      Category = 'Listar'
       Caption = '&Games'
       Enabled = False
       OnExecute = actGamesExecute
@@ -2014,6 +2014,11 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Plataformas'
       OnExecute = actPlataformasExecute
     end
+    object actListarUsers: TAction
+      Category = 'Listar'
+      Caption = 'Listar Usu'#225'rios'
+      OnExecute = actListarUsersExecute
+    end
   end
   object MainMenu: TMainMenu
     Left = 392
@@ -2023,9 +2028,6 @@ object frmPrincipal: TfrmPrincipal
       object CadastrodeGerentes1: TMenuItem
         Action = actGerentes
         Hint = 'Apenas usu'#225'rios Admin podem acessar '
-      end
-      object Anncios1: TMenuItem
-        Action = actGames
       end
       object Anncios2: TMenuItem
         Action = actAnuncios
@@ -2041,6 +2043,15 @@ object frmPrincipal: TfrmPrincipal
       end
       object Logar1: TMenuItem
         Action = actLogin
+      end
+    end
+    object Listar1: TMenuItem
+      Caption = 'Listar'
+      object Games1: TMenuItem
+        Action = actGames
+      end
+      object ListarUsurios1: TMenuItem
+        Action = actListarUsers
       end
     end
     object Configuraes1: TMenuItem

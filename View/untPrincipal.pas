@@ -20,7 +20,6 @@ type
     Image1: TImage;
     StatusBar: TStatusBar;
     pnlTopo: TPanel;
-    Anncios1: TMenuItem;
     Logar3: TMenuItem;
     Logar4: TMenuItem;
     Logar1: TMenuItem;
@@ -30,12 +29,17 @@ type
     Anncios2: TMenuItem;
     actPlataformas: TAction;
     Plataformas2: TMenuItem;
+    Listar1: TMenuItem;
+    Games1: TMenuItem;
+    actListarUsers: TAction;
+    ListarUsurios1: TMenuItem;
     procedure actLoginExecute(Sender: TObject);
     procedure actGerentesExecute(Sender: TObject);
     procedure actGamesExecute(Sender: TObject);
     procedure actParametrosExecute(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure actPlataformasExecute(Sender: TObject);
+    procedure actListarUsersExecute(Sender: TObject);
   private
     { Private declarations }
     procedure DefinirStatusBar;
@@ -53,7 +57,7 @@ implementation
 {$R *.dfm}
 
 uses  untLoginView, untManagerView, udmConexao, untGamesView, untParametros,
-      untPlataformasView;
+      untPlataformasView, untUsuersView;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
@@ -72,12 +76,13 @@ end;
 procedure TfrmPrincipal.HabilitarDesabilitarMenus;
 begin
   DefinirStatusBar;
-  actLogin.Enabled       := True;
-  actDeslogar.Enabled    := DMConexao.Login.Token <> '';
-  actGerentes.Enabled    := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
-  actGames.Enabled       := True;//(DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
-  actPlataformas.Enabled := True;
-  actAnuncios.Enabled    := True;
+  actLogin.Enabled         := True;
+  actDeslogar.Enabled      := DMConexao.Login.Token <> '';
+  actGerentes.Enabled      := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
+  actGames.Enabled         := True;
+  actPlataformas.Enabled   := True;
+  actAnuncios.Enabled      := True;
+  actListarUsers.Enabled   := DMConexao.Login.Token <> '';
 end;
 
 procedure TfrmPrincipal.DefinirStatusBar;
@@ -117,6 +122,14 @@ begin
      Application.CreateForm(TfrmPlataformas, frmPlataformas);
 
   frmPlataformas.ShowModal;
+end;
+
+procedure TfrmPrincipal.actListarUsersExecute(Sender: TObject);
+begin
+  if frmUsers = Nil then
+     Application.CreateForm(TfrmUsers, frmUsers);
+
+  frmUsers.ShowModal;
 end;
 
 end.

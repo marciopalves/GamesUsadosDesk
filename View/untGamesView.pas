@@ -39,8 +39,7 @@ var
 
 implementation
 
-Uses udmConexao, udmGames, untUtils, System.JSON, Rest.Json,
-     untGame;
+Uses udmConexao, udmGames, untUtils, System.JSON, Rest.Json;
 
 {$R *.dfm}
 
@@ -86,12 +85,11 @@ Var
   vJsonValor,
   vJsonItem: TJsonValue;
 
-  vArrayGames,
-  vArrayFields: TJSonArray;
+  vArrayGames: TJSonArray;
 
   vCont, i: Integer;
-  vGame: TGame;
 begin
+  GerarLog('Carregar Games Memoria');
   vObjetoJson := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(DMGames.ListaJsonGames), 0) as TJsonObject;
 
   vJsonValor  := vObjetoJson.Get('content').JsonValue;
@@ -109,8 +107,6 @@ begin
 
     cdsGames.Post;
   end;
-
-
 end;
 
 procedure TfrmGamesView.FormCreate(Sender: TObject);

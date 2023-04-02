@@ -68,7 +68,6 @@ object frmGamesView: TfrmGamesView
     Height = 358
     Align = alRight
     TabOrder = 1
-    ExplicitLeft = 495
     object btnPesqGames: TButton
       Left = 14
       Top = 112
