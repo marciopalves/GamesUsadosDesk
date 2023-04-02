@@ -27,7 +27,6 @@ object frmGamesView: TfrmGamesView
       Width = 601
       Height = 356
       Align = alClient
-      DataSource = dsGames
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
@@ -78,34 +77,5 @@ object frmGamesView: TfrmGamesView
       TabOrder = 0
       OnClick = btnPesqGamesClick
     end
-  end
-  object cdsGames: TClientDataSet
-    Aggregates = <>
-    Params = <>
-    Left = 536
-    Top = 176
-    object cdsGamesId: TIntegerField
-      FieldName = 'Id'
-    end
-    object cdsGamesTitle: TStringField
-      DisplayWidth = 80
-      FieldName = 'Title'
-      Size = 80
-    end
-    object cdsGamesPlataforma: TStringField
-      DisplayWidth = 60
-      FieldName = 'Plataforma'
-      Size = 60
-    end
-    object cdsGamesImage: TStringField
-      DisplayWidth = 120
-      FieldName = 'Image'
-      Size = 120
-    end
-  end
-  object dsGames: TDataSource
-    DataSet = cdsGames
-    Left = 536
-    Top = 232
   end
 end

@@ -16,20 +16,12 @@ type
     pnlBotoes: TPanel;
     btnPesqGames: TButton;
     dbgGames: TDBGrid;
-    cdsGames: TClientDataSet;
-    dsGames: TDataSource;
-    cdsGamesId: TIntegerField;
-    cdsGamesPlataforma: TStringField;
-    cdsGamesTitle: TStringField;
-    cdsGamesImage: TStringField;
     procedure btnPesqGamesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
     procedure CarregarGamesApi;
-    procedure CarregarGamesMemoria;
-    procedure CarregarGamesBancoDados;
   public
     { Public declarations }
   end;
@@ -54,7 +46,6 @@ begin
   begin
     try
       DMGames.ListarGames;
-      CarregarGamesMemoria;
     except
       on E: exception do
       begin
@@ -72,50 +63,12 @@ begin
   end;
 end;
 
-procedure TfrmGamesView.CarregarGamesBancoDados;
-begin
-  //
-end;
-
-procedure TfrmGamesView.CarregarGamesMemoria;
-Var
-  vObjetoJson,
-  vSubObjJson: TJsonObject;
-
-  vJsonValor,
-  vJsonItem: TJsonValue;
-
-  vArrayGames: TJSonArray;
-
-  vCont, i: Integer;
-begin
-  GerarLog('Carregar Games Memoria');
-  vObjetoJson := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(DMGames.ListaJsonGames), 0) as TJsonObject;
-
-  vJsonValor  := vObjetoJson.Get('content').JsonValue;
-  vArrayGames := vJsonValor as TJSONArray;
-
-  for vCont := 0 to vArrayGames.Size -1 do
-  begin
-    vSubObjJson  := (vArrayGames.Get(vCont) as TJsonObject);
-
-    cdsGames.Insert;
-    cdsGamesId.AsInteger         :=  StrToIntDef(RetornaDepois(':', vSubObjJson.Pairs[0].ToString), 0);
-    cdsGamesTitle.AsString       :=  RetornaDepois(':', vSubObjJson.Pairs[1].ToString);
-    cdsGamesPlataforma.AsString  :=  RetornaDepois(':', vSubObjJson.Pairs[2].ToString);
-    cdsGamesImage.AsString       :=  RetornaDepois(':', vSubObjJson.Pairs[4].ToString);
-
-    cdsGames.Post;
-  end;
-end;
-
 procedure TfrmGamesView.FormCreate(Sender: TObject);
 begin
   if DMGames = Nil then
     Application.CreateForm(TDMGames, DMGames);
 
-  cdsGames.CreateDataSet;
-  //dbgGames.DataSource := DMGames.dsGames;
+  dbgGames.DataSource := DMGames.dsGamesMemoria;
 end;
 
 procedure TfrmGamesView.FormClose(Sender: TObject; var Action: TCloseAction);

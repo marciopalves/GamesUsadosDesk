@@ -6,20 +6,27 @@ uses
   System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option,
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
-  System.JSON, Rest.Json;
+  System.JSON, Rest.Json, Datasnap.DBClient;
 
 type
   TDMGames = class(TDataModule)
     mtGames: TFDMemTable;
     dsGames: TDataSource;
+    cdsGamesMemoria: TClientDataSet;
+    cdsGamesMemoriaId: TIntegerField;
+    cdsGamesMemoriaTitle: TStringField;
+    cdsGamesMemoriaPlataforma: TStringField;
+    cdsGamesMemoriaImage: TStringField;
+    dsGamesMemoria: TDataSource;
     procedure DataModuleCreate(Sender: TObject);
   private
+    FListaJsonGames: String;
     { Private declarations }
+    procedure CarregarGamesMemoria();
 
   public
     { Public declarations }
-    ListaJsonGames: String;
-
+    property ListaJsonGames: String read FListaJsonGames write FListaJsonGames;
     procedure ListarGames;
 
   end;
@@ -43,7 +50,7 @@ Const
 
 procedure TDMGames.DataModuleCreate(Sender: TObject);
 begin
-  //
+  cdsGamesMemoria.CreateDataSet;
 end;
 
 procedure TDMGames.ListarGames;
@@ -66,7 +73,41 @@ begin
   GerarLog('Json *** '+vResp.Content);
 
   ListaJsonGames := vResp.Content;
+
+  CarregarGamesMemoria();
+
 end;
 
+procedure TDMGames.CarregarGamesMemoria;
+Var
+  vObjetoJson,
+  vSubObjJson: TJsonObject;
+
+  vJsonValor,
+  vJsonItem: TJsonValue;
+
+  vArrayGames: TJSonArray;
+
+  vCont, i: Integer;
+begin
+  GerarLog('Carregar Games Memoria');
+  vObjetoJson := TJSONObject.ParseJSONValue(TEncoding.ASCII.GetBytes(DMGames.ListaJsonGames), 0) as TJsonObject;
+
+  vJsonValor  := vObjetoJson.Get('content').JsonValue;
+  vArrayGames := vJsonValor as TJSONArray;
+
+  for vCont := 0 to vArrayGames.Size -1 do
+  begin
+    vSubObjJson  := (vArrayGames.Get(vCont) as TJsonObject);
+
+    cdsGamesMemoria.Insert;
+    cdsGamesMemoriaId.AsInteger         :=  StrToIntDef(RetornaDepois(':', vSubObjJson.Pairs[0].ToString), 0);
+    cdsGamesMemoriaTitle.AsString       :=  RetornaDepois(':', vSubObjJson.Pairs[1].ToString);
+    cdsGamesMemoriaPlataforma.AsString  :=  RetornaDepois(':', vSubObjJson.Pairs[2].ToString);
+    cdsGamesMemoriaImage.AsString       :=  RetornaDepois(':', vSubObjJson.Pairs[4].ToString);
+
+    cdsGamesMemoria.Post;
+  end;
+end;
 
 end.
