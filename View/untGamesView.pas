@@ -19,11 +19,16 @@ type
     procedure btnPesqGamesClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure dbgGamesDblClick(Sender: TObject);
   private
+    FIdGameSelected: String;
+    FFormCall: String;
     { Private declarations }
     procedure CarregarGamesApi;
   public
     { Public declarations }
+    property FormCall: String read FFormCall write FFormCall;
+    property IdGameSelected: String read FIdGameSelected write FIdGameSelected;
   end;
 
 var
@@ -78,6 +83,13 @@ begin
     DmGames.mtGames.Close;
     DMGames.Free;
   end;
+end;
+
+procedure TfrmGamesView.dbgGamesDblClick(Sender: TObject);
+begin
+  IdGameSelected := DMGames.cdsGamesMemoriaId.AsString;
+  if FormCall = 'frmAnuncios' then
+    Hide;
 end;
 
 end.

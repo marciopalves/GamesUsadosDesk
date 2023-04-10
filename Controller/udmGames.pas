@@ -56,7 +56,6 @@ end;
 procedure TDMGames.ListarGames;
 Var
   vResp: IResponse;
-  vJsonArray: TJSONArray;
 begin
   vResp := TRequest.New
              .BaseURL(DMConexao.BaseUrl)
@@ -82,12 +81,9 @@ procedure TDMGames.CarregarGamesMemoria;
 Var
   vObjetoJson,
   vSubObjJson: TJsonObject;
-
   vJsonValor,
   vJsonItem: TJsonValue;
-
   vArrayGames: TJSonArray;
-
   vCont, i: Integer;
 begin
   GerarLog('Carregar Games Memoria');

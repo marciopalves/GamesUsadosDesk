@@ -12,7 +12,7 @@ object frmPrincipal: TfrmPrincipal
   Font.Style = []
   Menu = MainMenu
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -1982,6 +1982,7 @@ object frmPrincipal: TfrmPrincipal
     object actLogin: TAction
       Category = 'Login'
       Caption = 'Login'
+      ShortCut = 32844
       OnExecute = actLoginExecute
     end
     object actDeslogar: TAction
@@ -2006,8 +2007,9 @@ object frmPrincipal: TfrmPrincipal
       OnExecute = actParametrosExecute
     end
     object actAnuncios: TAction
-      Category = 'Cadastros'
-      Caption = '&An'#250'ncios'
+      Category = 'Listar'
+      Caption = 'Listar &An'#250'ncios'
+      OnExecute = actAnunciosExecute
     end
     object actPlataformas: TAction
       Category = 'Cadastros'
@@ -2029,9 +2031,6 @@ object frmPrincipal: TfrmPrincipal
         Action = actGerentes
         Hint = 'Apenas usu'#225'rios Admin podem acessar '
       end
-      object Anncios2: TMenuItem
-        Action = actAnuncios
-      end
       object Plataformas2: TMenuItem
         Action = actPlataformas
       end
@@ -2052,6 +2051,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object ListarUsurios1: TMenuItem
         Action = actListarUsers
+      end
+      object Anncios1: TMenuItem
+        Action = actAnuncios
       end
     end
     object Configuraes1: TMenuItem

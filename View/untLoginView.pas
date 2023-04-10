@@ -20,10 +20,12 @@ type
     actAdmin: TAction;
     actClear: TAction;
     actGerente: TAction;
+    actUser: TAction;
     procedure bbConfirmarClick(Sender: TObject);
     procedure actAdminExecute(Sender: TObject);
     procedure actClearExecute(Sender: TObject);
     procedure actGerenteExecute(Sender: TObject);
+    procedure actUserExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -68,12 +70,21 @@ procedure TfrmLogin.actAdminExecute(Sender: TObject);
 begin
   edtEmail.Text    := 'admin@admin.com';
   edtPassword.Text := '123456';
+  bbConfirmar.SetFocus;
 end;
 
 procedure TfrmLogin.actGerenteExecute(Sender: TObject);
 begin
   edtEmail.Text    := 'manager@manager.com';
   edtPassword.Text := '123456';
+  bbConfirmar.SetFocus;
+end;
+
+procedure TfrmLogin.actUserExecute(Sender: TObject);
+begin
+  edtEmail.Text    := 'user1@gmail.com';
+  edtPassword.Text := '123456';
+  bbConfirmar.SetFocus;
 end;
 
 end.

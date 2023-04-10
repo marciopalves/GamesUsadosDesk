@@ -36,14 +36,23 @@ Const
 
 
 procedure TDMUsers.ListarUsuarios;
+Var
+  vResp: IResponse;
 begin
-    TRequest.New
+  vResp := TRequest.New
       .BaseURL(DMConexao.BaseUrl)
       .Resource(RESOURCE_LISTAR)
       .TokenBearer(DMConexao.Login.Token)
       .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
       .DataSetAdapter(mtUsers)
       .Get;
+  if vResp.StatusCode = 200 then
+    GerarLog('Listar Usuários.:'+mtUsers.RecordCount.ToString)
+  else GerarLog('Listar Usuários Erro Status Code:'+vResp.StatusCode.ToString);
+
+  GerarLog('Json Retornado:'+vResp.JSONValue.ToString);
+  GerarLog('Json *** '+vResp.Content);
+
 end;
 
 end.

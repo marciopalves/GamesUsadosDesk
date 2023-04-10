@@ -26,13 +26,13 @@ type
     actParametros: TAction;
     Configuraes1: TMenuItem;
     actAnuncios: TAction;
-    Anncios2: TMenuItem;
     actPlataformas: TAction;
     Plataformas2: TMenuItem;
     Listar1: TMenuItem;
     Games1: TMenuItem;
     actListarUsers: TAction;
     ListarUsurios1: TMenuItem;
+    Anncios1: TMenuItem;
     procedure actLoginExecute(Sender: TObject);
     procedure actGerentesExecute(Sender: TObject);
     procedure actGamesExecute(Sender: TObject);
@@ -40,6 +40,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure actPlataformasExecute(Sender: TObject);
     procedure actListarUsersExecute(Sender: TObject);
+    procedure actAnunciosExecute(Sender: TObject);
   private
     { Private declarations }
     procedure DefinirStatusBar;
@@ -57,7 +58,7 @@ implementation
 {$R *.dfm}
 
 uses  untLoginView, untManagerView, udmConexao, untGamesView, untParametros,
-      untPlataformasView, untUsuersView;
+      untPlataformasView, untUsuersView, untAnunciosView;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
@@ -81,7 +82,7 @@ begin
   actGerentes.Enabled      := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'ADMIN');
   actGames.Enabled         := True;
   actPlataformas.Enabled   := True;
-  actAnuncios.Enabled      := True;
+  actAnuncios.Enabled      := DMConexao.Login.Token <> '';
   actListarUsers.Enabled   := DMConexao.Login.Token <> '';
 end;
 
@@ -130,6 +131,14 @@ begin
      Application.CreateForm(TfrmUsers, frmUsers);
 
   frmUsers.ShowModal;
+end;
+
+procedure TfrmPrincipal.actAnunciosExecute(Sender: TObject);
+begin
+  if frmAnuncios = Nil then
+     Application.CreateForm(TfrmAnuncios, frmAnuncios);
+
+  frmAnuncios.ShowModal;
 end;
 
 end.

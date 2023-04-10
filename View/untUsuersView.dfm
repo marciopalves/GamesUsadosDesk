@@ -46,6 +46,7 @@ object frmUsers: TfrmUsers
       Width = 472
       Height = 336
       Align = alClient
+      DataSource = DMUsers.dsUsers
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText

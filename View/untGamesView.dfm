@@ -33,6 +33,7 @@ object frmGamesView: TfrmGamesView
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnDblClick = dbgGamesDblClick
       Columns = <
         item
           Expanded = False

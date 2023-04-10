@@ -41,6 +41,10 @@ Const
 
 procedure TDMPlataforma.ListarPlataformas;
 begin
+  GerarLog('Listar Plataformas:'+
+           DMConexao.BaseUrl+
+           RESOURCE_LISTAR);
+
   TRequest.New
       .BaseURL(DMConexao.BaseUrl)
       .Resource(RESOURCE_LISTAR)
