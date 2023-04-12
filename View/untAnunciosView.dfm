@@ -11,6 +11,7 @@ object frmAnuncios: TfrmAnuncios
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlFiltros: TPanel
@@ -47,19 +48,61 @@ object frmAnuncios: TfrmAnuncios
       OnClick = btnPesquisaClick
     end
   end
-  object DBGrid1: TDBGrid
+  object dbgAnuncios: TDBGrid
     Left = 0
     Top = 49
     Width = 565
     Height = 236
     Hint = 'Pesquisar an'#250'ncios'
     Align = alClient
+    DataSource = DMAnuncios.dsAnuncios
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'Id'
+        Width = 84
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'GameId'
+        Width = 80
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TitleGame'
+        Width = 126
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Plataform'
+        Width = 83
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CreatedBy'
+        Width = 72
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Price'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Enable'
+        Visible = True
+      end>
   end
   object actAnuncios: TActionList
     Left = 480

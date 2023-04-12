@@ -15,9 +15,10 @@ type
     btnPesquisa: TButton;
     actAnuncios: TActionList;
     actBuscarGames: TAction;
-    DBGrid1: TDBGrid;
+    dbgAnuncios: TDBGrid;
     procedure actBuscarGamesExecute(Sender: TObject);
     procedure btnPesquisaClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
     procedure Pesquisar;
@@ -34,14 +35,27 @@ implementation
 
 Uses untGamesView, udmAnuncios, untUtils;
 
+procedure TfrmAnuncios.FormCreate(Sender: TObject);
+begin
+  if DMAnuncios = Nil then
+    Application.CreateForm(TDMAnuncios, DMAnuncios);
+
+  dbgAnuncios.DataSource := DMAnuncios.dsAnuncios;
+end;
+
 procedure TfrmAnuncios.actBuscarGamesExecute(Sender: TObject);
 begin
-  if frmGamesView = nil then
-    Application.CreateForm(TfrmGamesView, frmGamesView);
+  try
+    GerarLog('Chamando Form de Games');
+    if frmGamesView = nil then
+      Application.CreateForm(TfrmGamesView, frmGamesView);
 
-  frmGamesView.FormCall := 'frmAnuncios';
-  frmGamesView.ShowModal;
-  edtFiltro.Text := frmGamesView.IdGameSelected;
+    frmGamesView.FormCall := 'frmAnuncios';
+    frmGamesView.ShowModal;
+  finally
+    if frmGamesView.IdGameSelected <> EmptyStr then
+      edtFiltro.Text := frmGamesView.IdGameSelected;
+  end;
 end;
 
 procedure TfrmAnuncios.btnPesquisaClick(Sender: TObject);
@@ -52,14 +66,11 @@ end;
 procedure TfrmAnuncios.Pesquisar;
 begin
   if StrToIntDef(edtFiltro.Text, 0)> 0 then
-  begin
-    DMAnuncios.ListarAnunciosJogo(edtFiltro.Text);
-  end
+    DMAnuncios.ListarAnunciosJogo(edtFiltro.Text)
   else
-  begin
     DMAnuncios.ListarMeusAnuncios;
-    //DMAnuncios.BuscarMeusAnuncios
-  end;
+
+  Refresh;
 end;
 
 end.

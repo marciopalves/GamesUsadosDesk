@@ -89,7 +89,7 @@ end;
 procedure TfrmPrincipal.DefinirStatusBar;
 begin
   if DMConexao.Login.UserType <> '' then
-    StatusBar.panels[0].Text := 'Usuário.: '+ DMConexao.Login.UserType
+    StatusBar.panels[0].Text := 'Usuário.: '+DMConexao.Login.UserType
   else StatusBar.panels[0].Text := 'Usuário.: Não conectado';
 end;
 

@@ -16,16 +16,20 @@ type
 type
   TDMAnuncios = class(TDataModule)
     cdsAnuncios: TClientDataSet;
-    dsAnuncios: TDataSource;
     cdsAnunciosId: TIntegerField;
     cdsAnunciosGameId: TIntegerField;
-    cdsAnunciosTituloGame: TStringField;
+    cdsAnunciosTitleGame: TStringField;
+    cdsAnunciosPlataform: TStringField;
     cdsAnunciosPrice: TFloatField;
+    dsAnuncios: TDataSource;
+    cdsAnunciosEnable: TBooleanField;
+    cdsAnunciosCreatedBy: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
     procedure CarregarAnunciosMemoria(const pTipoListaAnuncio: TTipoListaAnuncio);
-    procedure CarregarMeusAnuncios(const pTexto: String);
+    procedure CarregarMeusAnuncios( pTexto: String);
+    procedure CarregarAnunciosGame( pTexto: String);
   public
     { Public declarations }
 
@@ -37,6 +41,8 @@ type
 
 var
   DMAnuncios: TDMAnuncios;
+  cdsAnuncios: TClientDataSet;
+  dsAnuncios: TDatasource;
   vListaAnuncios: String;
 
 implementation
@@ -45,12 +51,12 @@ implementation
 
 {$R *.dfm}
 
-Uses untUtils, udmConexao,
-     REST.Types, REST.JsonReflect, RESTRequest4D;
+Uses untUtils, udmConexao, untGame,
+     REST.Types, REST.JsonReflect, RESTRequest4D, System.StrUtils;
 
 Const
   RESOURCE_LISTAR_MEUS = '/announcements/my-games';
-  RESOURCE_LISTAR_APARTIR_GAME = '/announcements/game/&s';
+  RESOURCE_LISTAR_APARTIR_GAME = '/announcements/game/';
   RESOURCE_CRIAR = '/announcements/game/%s/price/%s';
   ERRO_API = 'Erro ao acessar api!%s %s';
 
@@ -58,8 +64,7 @@ Const
 
 procedure TDMAnuncios.DataModuleCreate(Sender: TObject);
 begin
-//  cdsAnuncios.CreateDataSet;
-//  cdsAnuncios.Active := True;
+  cdsAnuncios.CreateDataSet;
 end;
 
 procedure TDMAnuncios.CriarAnuncio(const pIdGame:String; const pValor:String);
@@ -86,9 +91,9 @@ Var
   vResp: IResponse;
   vRecurso: String;
 begin
-  vRecurso := Format(RESOURCE_LISTAR_APARTIR_GAME, [pIdGame]);
+  vRecurso := RESOURCE_LISTAR_APARTIR_GAME + pIdGame;
 
-  GerarLog('ListarAnunciosJogo apartir do Game:'+pIdGame+
+  GerarLog('ListarAnunciosGame IdGame:'+pIdGame+
            sLineBreak+
            'url:'+DMConexao.BaseUrl+vRecurso);
   try
@@ -162,40 +167,34 @@ begin
 
   case pTipoListaAnuncio of
 
-    tpMeusAnuncios:
-    begin
-      CarregarMeusAnuncios(vListaAnuncios);
-    end;
+    tpMeusAnuncios: CarregarMeusAnuncios(vListaAnuncios);
 
-    tpAnunciosGame:
-    begin
-      //
-      //
-    end;
-
+    tpAnunciosGame: CarregarAnunciosGame(vListaAnuncios);
   end;
+  dsAnuncios.DataSet := cdsAnuncios;
 end;
 
-procedure TDMAnuncios.CarregarMeusAnuncios(const pTexto: String);
+procedure TDMAnuncios.CarregarMeusAnuncios( pTexto: String);
 Var
   vAnuncios,
   vAnuncioAtual: String;
   vPosicao: Integer;
   vLista: TStrings;
-  vItem: String;
+  vItem, vValor: String;
 begin
   GerarLog('Carregar Meus Anúncios!');
+  vPosicao  := 0;
   vAnuncios := pTexto;
 
   try
-    vLista := TStringList.Create;
-    vPosicao  := Pos('"}},', vAnuncios);
-    //cdsAnuncios.EmptyDataSet;
+    vLista   := TStringList.Create;
+    vPosicao := Pos('"}},', vAnuncios);
+    cdsAnuncios.EmptyDataSet;
+
     while vPosicao <> 0 do
     begin
-      vPosicao  := Pos('"}},', vAnuncios);
       vAnuncioAtual := Copy(vAnuncios, 0, vPosicao);
-
+      vLista.Clear;
       ExtractStrings([':'], [], PChar(vAnuncioAtual), vLista);
 
       cdsAnuncios.Append;
@@ -209,23 +208,42 @@ begin
       cdsAnunciosGameId.AsInteger := StrToIntDef(Copy(vItem,
                                                       0,
                                                       Pos(',', vItem)-1),
-                                                 0);
-
+                                                      0);
       vItem := vLista[4];
-      cdsAnunciosTituloGame.AsString := Copy(vItem,
-                                             0,
-                                             Pos(',', vItem)-1);
+      vValor := Copy(vItem,
+                     0,
+                     Pos(',', vItem)-1);
 
-      vItem := vLista[4];
-      cdsAnunciosPrice.AsFloat := StrToFloatDef(Copy(vItem,
-                                                      0,
-                                                      Pos(',', vItem)-1),
-                                                0);
+      cdsAnunciosTitleGame.AsString := StringReplace(vValor, '"', '', [rfReplaceAll]);
 
-      Delete(vAnuncios, 0, vPosicao);
+      vItem  := vLista[5];
+      vValor := Copy(vItem,
+                     0,
+                     Pos(',', vItem)-1);
+      cdsAnunciosPlataform.AsString := StringReplace(vValor, '"', '', [rfReplaceAll]);
+
+      vItem  := vLista[14];
+      vValor := Copy(vItem,
+                     0,
+                     Pos(',', vItem)-1);
+      cdsAnunciosCreatedBy.AsString := StringReplace(vValor, '"', '', [rfReplaceAll]);
+
+      vItem := vLista[18];
+      vValor := Copy(vItem,
+                     0,
+                     Pos(',', vItem)-1);
+
+      cdsAnunciosPrice.AsString := StringReplace(vValor, '.', ',', []);
+
+      vItem := vLista[19];
+      cdsAnunciosEnable.AsBoolean := StrToBool(Copy(vItem,
+                                                0,
+                                                Pos(',', vItem)-1));
+      cdsAnuncios.Post;
+
+      Delete(vAnuncios, 1, vPosicao+3);
       vPosicao  := Pos('"}},', vAnuncios);
     end;
-
   except
     on e:exception do
     begin
@@ -233,211 +251,194 @@ begin
       raise Exception.Create('Erro dados em memoria '+e.ToString);
     end;
   end;
+  GerarLog('Dados carregados com sucesso! '+
+           'Qtd Registros:'+IntToStr(cdsAnuncios.RecordCount));
+end;
 
-  GerarLog(vAnuncioAtual);
+procedure TDMAnuncios.CarregarAnunciosGame(pTexto: String);
+Var
+  vAnuncios,
+  vAnuncioAtual: String;
+  vPosicao: Integer;
+  vLista: TStrings;
+  vItem, vValor: String;
+  vGame: TGame;
+begin
+  GerarLog('Carregar Anúncios a partir de um game!');
+  vPosicao    := 0;
+  try
+    vAnuncios := pTexto;
+    vGame     := TGame.Create();
+    vLista    := TStringList.Create;
+
+    try
+      vLista.Clear;
+      ExtractStrings([':'], [], PChar(vAnuncios), vLista);
+
+      vItem    := vLista[2];
+      vGame.Id := StrToIntDef(Copy(vItem,
+                                   0,
+                                   Pos(',', vItem)-1),
+                                   0);
+
+
+      vItem  := vLista[3];
+      vValor := Copy(vItem,
+                     0,
+                     Pos(',', vItem)-1);
+
+      vGame.Title := StringReplace(vValor, '"', '', [rfReplaceAll]);
+      vItem  := vLista[4];
+      vValor := Copy(vItem,
+                     0,
+                     Pos(',', vItem)-1);
+
+      vGame.Plataforma := StringReplace(vValor, '"', '', [rfReplaceAll]);
+
+      vItem  := vLista[15];
+      vValor := Copy(vItem,
+                     0,
+                     Pos(',', vItem)-1);
+      vGame.CreatedBy := StringReplace(vValor, '"', '', [rfReplaceAll]);
+
+      vPosicao := Pos('[{', vAnuncios);
+      Delete(vAnuncios, 1, vPosicao);
+
+      cdsAnuncios.EmptyDataSet;
+
+      vPosicao := Pos('},{', vAnuncios);
+      if (vPosicao = 0)then
+        vPosicao := Pos('}]}', vAnuncios);
+
+      while vPosicao <> 0 do
+      begin
+        vAnuncioAtual := Copy(vAnuncios, 0, vPosicao);
+        vLista.Clear;
+        ExtractStrings([':'], [], PChar(vAnuncioAtual), vLista);
+
+        cdsAnuncios.Append;
+
+        vItem := vLista[1];
+        cdsAnunciosId.AsInteger  := StrToIntDef(Copy(vItem,
+                                                     0,
+                                                     Pos(',', vItem)-1),
+                                                     0);
+
+        cdsAnunciosGameId.AsInteger   := vGame.Id;
+        cdsAnunciosTitleGame.AsString := vGame.Title;
+        cdsAnunciosPlataform.AsString := vGame.Plataforma;
+
+        vItem  := vLista[3];
+        vValor := Copy(vItem,
+                       0,
+                       Pos(',', vItem)-1);
+        cdsAnunciosCreatedBy.AsString := StringReplace(vValor, '"', '', [rfReplaceAll]);
+
+        vItem := vLista[7];
+        vValor := Copy(vItem,
+                       0,
+                       Pos('}', vItem)-1);
+
+        cdsAnunciosPrice.AsString := StringReplace(vValor, '.', ',', []);
+
+
+        cdsAnuncios.Post;
+
+        Delete(vAnuncios, 1, vPosicao);
+
+        vPosicao  := Pos('},{', vAnuncios);
+        if (vPosicao = 0)then
+          vPosicao := Pos('}]}', vAnuncios);
+      end;
+      GerarLog('Dados carregados com sucesso! '+
+               'Qtd Registros:'+IntToStr(cdsAnuncios.RecordCount));
+    except
+      on e:exception do
+      begin
+        GerarLog('Erro dados em memoria '+e.ToString);
+        raise Exception.Create('Erro dados em memoria '+e.ToString);
+      end;
+    end;
+
+  finally
+    FreeAndNil(vGame);
+  end;
 end;
 
 end.
 
+//*********************************************************************************************************************************************************************************************/
+//*********************************************************************************************************************************************************************************************/
 
---- Anuncios MyGames  Primeiro o id do anuncio depois game
+-- Meus Anuncios
 [
-    {
-        "id": 1,
-        "game": {
-            "id": 1,
-            "title": "God of War IV",
-            "platform": "Playstation 4",
-            "metadata": {
-                "createdBy": "pedrokra@gmail.com",
-                "createdAt": "2021-07-07T11:22:52.690+00:00",
-                "updatedBy": null,
-                "updateAt": null,
-                "textCreatedAt": "07/07/2021 08:22:52"
-            },
-            "image": "http://localhost:8080/images/games/1.png"
-        },
-        "owner": {
-            "name": "Pedro",
-            "phone": "+55 (34) 9 1234-1111",
-            "email": "user1@gmail.com",
-            "image": null
-        },
-        "price": 300.0,
-        "enabled": true,
-        "priceMasked": "R$ 300,00",
-        "metadata": {
-            "createdBy": "user1@gmail.com",
-            "createdAt": "2021-07-07T11:22:52.690+00:00",
-            "updatedBy": null,
-            "updateAt": null,
-            "textCreatedAt": "07/07/2021 08:22:52"
-        }
-    },
-    {
-        "id": 2,
-        "game": {
-            "id": 2,
-            "title": "Horizon Zero Dawn: Forbidden West",
-            "platform": "Playstation 5",
-            "metadata": {
-                "createdBy": "pedrokra@gmail.com",
-                "createdAt": "2021-07-07T11:22:52.690+00:00",
-                "updatedBy": null,
-                "updateAt": null,
-                "textCreatedAt": "07/07/2021 08:22:52"
-            },
-            "image": "http://localhost:8080/images/games/2.png"
-        },
-        "owner": {
-            "name": "Pedro",
-            "phone": "+55 (34) 9 1234-1111",
-            "email": "user1@gmail.com",
-            "image": null
-        },
-        "price": 500.0,
-        "enabled": true,
-        "priceMasked": "R$ 500,00",
-        "metadata": {
-            "createdBy": "user1@gmail.com",
-            "createdAt": "2021-07-07T11:22:52.690+00:00",
-            "updatedBy": null,
-            "updateAt": null,
-            "textCreatedAt": "07/07/2021 08:22:52"
-        }
-    },
-    {
-        "id": 4,
-        "game": {
-            "id": 1,
-            "title": "God of War IV",
-            "platform": "Playstation 4",
-            "metadata": {
-                "createdBy": "pedrokra@gmail.com",
-                "createdAt": "2021-07-07T11:22:52.690+00:00",
-                "updatedBy": null,
-                "updateAt": null,
-                "textCreatedAt": "07/07/2021 08:22:52"
-            },
-            "image": "http://localhost:8080/images/games/1.png"
-        },
-        "owner": {
-            "name": "Pedro",
-            "phone": "+55 (34) 9 1234-1111",
-            "email": "user1@gmail.com",
-            "image": null
-        },
-        "price": 123.0,
-        "enabled": false,
-        "priceMasked": "R$ 123,00",
-        "metadata": {
-            "createdBy": "user1@gmail.com",
-            "createdAt": "2023-01-13T11:22:52.690+00:00",
-            "updatedBy": null,
-            "updateAt": null,
-            "textCreatedAt": "13/01/2023 08:22:52"
-        }
-    }
+	{
+		"id":1,
+		"game":{
+					"id":1,
+					"title":"God of War IV",
+					"platform":"Playstation 4",
+					"metadata":{
+						"createdBy":"pedrokra@gmail.com",
+						"createdAt":"2021-07-07T11:22:52.690+00:00",
+						"updatedBy":null,
+						"updateAt":null,
+						"textCreatedAt":"07/07/2021 08:22:52"},
+						"image":"http://localhost:8080/images/games/1.png"
+				},
+		"owner":{
+			"name":"Pedro",
+			"phone":"+55 (34) 9 1234-1111",
+			"email":"user1@gmail.com",
+			"image":null},
+			"price":300.0,
+			"enabled":true,
+			"priceMasked":"R$ 300,00",
+			"metadata":{
+						"createdBy":"user1@gmail.com",
+						"createdAt":"2021-07-07T11:22:52.690+00:00",
+						"updatedBy":null,
+						"updateAt":null,
+						"textCreatedAt":"07/07/2021 08:22:52"
+						}
+	}
 ]
 
---#########################################################
--- de um jogo especifico
+//*********************************************************************************************************************************************************************************************
+//*********************************************************************************************************************************************************************************************
+-- Anuncios a partir de um jogo
 
-[
-    {
-        "id": 1,
-        "game": {
-            "id": 1,
-            "title": "God of War IV",
-            "platform": "Playstation 4",
-            "metadata": {
-                "createdBy": "pedrokra@gmail.com",
-                "createdAt": "2021-07-07T11:22:52.690+00:00",
-                "updatedBy": null,
-                "updateAt": null,
-                "textCreatedAt": "07/07/2021 08:22:52"
-            },
-            "image": "http://localhost:8080/images/games/1.png"
-        },
-        "owner": {
-            "name": "Pedro",
-            "phone": "+55 (34) 9 1234-1111",
-            "email": "user1@gmail.com",
-            "image": null
-        },
-        "price": 300.0,
-        "enabled": true,
-        "priceMasked": "R$ 300,00",
-        "metadata": {
-            "createdBy": "user1@gmail.com",
-            "createdAt": "2021-07-07T11:22:52.690+00:00",
-            "updatedBy": null,
-            "updateAt": null,
-            "textCreatedAt": "07/07/2021 08:22:52"
-        }
-    },
-    {
-        "id": 2,
-        "game": {
-            "id": 2,
-            "title": "Horizon Zero Dawn: Forbidden West",
-            "platform": "Playstation 5",
-            "metadata": {
-                "createdBy": "pedrokra@gmail.com",
-                "createdAt": "2021-07-07T11:22:52.690+00:00",
-                "updatedBy": null,
-                "updateAt": null,
-                "textCreatedAt": "07/07/2021 08:22:52"
-            },
-            "image": "http://localhost:8080/images/games/2.png"
-        },
-        "owner": {
-            "name": "Pedro",
-            "phone": "+55 (34) 9 1234-1111",
-            "email": "user1@gmail.com",
-            "image": null
-        },
-        "price": 500.0,
-        "enabled": true,
-        "priceMasked": "R$ 500,00",
-        "metadata": {
-            "createdBy": "user1@gmail.com",
-            "createdAt": "2021-07-07T11:22:52.690+00:00",
-            "updatedBy": null,
-            "updateAt": null,
-            "textCreatedAt": "07/07/2021 08:22:52"
-        }
-    },
-    {
-        "id": 4,
-        "game": {
-            "id": 1,
-            "title": "God of War IV",
-            "platform": "Playstation 4",
-            "metadata": {
-                "createdBy": "pedrokra@gmail.com",
-                "createdAt": "2021-07-07T11:22:52.690+00:00",
-                "updatedBy": null,
-                "updateAt": null,
-                "textCreatedAt": "07/07/2021 08:22:52"
-            },
-            "image": "http://localhost:8080/images/games/1.png"
-        },
-        "owner": {
-            "name": "Pedro",
-            "phone": "+55 (34) 9 1234-1111",
-            "email": "user1@gmail.com",
-            "image": null
-        },
-        "price": 123.0,
-        "enabled": false,
-        "priceMasked": "R$ 123,00",
-        "metadata": {
-            "createdBy": "user1@gmail.com",
-            "createdAt": "2023-01-13T11:22:52.690+00:00",
-            "updatedBy": null,
-            "updateAt": null,
-            "textCreatedAt": "13/01/2023 08:22:52"
-        }
-    }
-]
+{
+	"game":{
+				"id":1,
+				"title":"God of War IV",
+				"platform":"Playstation 4",
+				"metadata":{
+								"createdBy":"pedrokra@gmail.com",
+								"createdAt":"2021-07-07T11:22:52.690+00:00",
+								"updatedBy":null,
+								"updateAt":null,
+								"textCreatedAt":"07/07/2021 08:22:52"},
+								"image":"http://localhost:8080/images/games/1.png"
+			},
+	"announcements":[
+						{
+							"id":1,
+							"owner":{
+										"name":"Pedro",
+										"phone":"+55 (34) 9 1234-1111",
+										"email":"user1@gmail.com",
+										"image":null},
+										"price":300.0
+						},
+						{
+							"id":6,
+							"owner":{
+										"name":"Luatane",
+										"phone":"+55 (61) 9 1234-2222",
+										"email":"user2@gmail.com",
+										"image":null},
+										"price":456.0
+						}
+					]
+}

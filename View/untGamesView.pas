@@ -36,7 +36,8 @@ var
 
 implementation
 
-Uses udmConexao, udmGames, untUtils, System.JSON, Rest.Json;
+Uses udmConexao, udmGames, untUtils,
+     System.JSON, Rest.Json;
 
 {$R *.dfm}
 
@@ -89,7 +90,10 @@ procedure TfrmGamesView.dbgGamesDblClick(Sender: TObject);
 begin
   IdGameSelected := DMGames.cdsGamesMemoriaId.AsString;
   if FormCall = 'frmAnuncios' then
-    Hide;
+  begin
+    frmGamesView.Close;
+  end;
+
 end;
 
 end.

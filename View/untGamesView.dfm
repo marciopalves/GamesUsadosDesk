@@ -74,7 +74,7 @@ object frmGamesView: TfrmGamesView
       Width = 75
       Height = 25
       Hint = 'Pesquisar Games na API'
-      Caption = 'Atualizar'
+      Caption = 'Pesquisar'
       TabOrder = 0
       OnClick = btnPesqGamesClick
     end
