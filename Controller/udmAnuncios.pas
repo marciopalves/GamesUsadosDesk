@@ -166,9 +166,7 @@ begin
   GerarLog('json.:'+vListaAnuncios);
 
   case pTipoListaAnuncio of
-
     tpMeusAnuncios: CarregarMeusAnuncios(vListaAnuncios);
-
     tpAnunciosGame: CarregarAnunciosGame(vListaAnuncios);
   end;
   dsAnuncios.DataSet := cdsAnuncios;

@@ -24,7 +24,8 @@ uses
   udmAnuncios in 'Controller\udmAnuncios.pas' {DMAnuncios: TDataModule},
   untGame in 'untGame.pas',
   udmUsers in 'Controller\udmUsers.pas' {DMUsers: TDataModule},
-  untUsuersView in 'View\untUsuersView.pas' {frmUsers};
+  untUsuersView in 'View\untUsuersView.pas' {frmUsers},
+  untCadAnunciosView in 'View\untCadAnunciosView.pas' {frmCadAnuncios};
 
 {$R *.res}
 

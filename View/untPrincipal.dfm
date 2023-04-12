@@ -2021,6 +2021,11 @@ object frmPrincipal: TfrmPrincipal
       Caption = 'Listar Usu'#225'rios'
       OnExecute = actListarUsersExecute
     end
+    object actCadAnuncios: TAction
+      Category = 'Cadastros'
+      Caption = 'Cadastro de An'#250'ncios'
+      OnExecute = actCadAnunciosExecute
+    end
   end
   object MainMenu: TMainMenu
     Left = 392
@@ -2033,6 +2038,9 @@ object frmPrincipal: TfrmPrincipal
       end
       object Plataformas2: TMenuItem
         Action = actPlataformas
+      end
+      object CadastrodeAnncios1: TMenuItem
+        Action = actCadAnuncios
       end
     end
     object Logar3: TMenuItem

@@ -33,6 +33,8 @@ type
     actListarUsers: TAction;
     ListarUsurios1: TMenuItem;
     Anncios1: TMenuItem;
+    actCadAnuncios: TAction;
+    CadastrodeAnncios1: TMenuItem;
     procedure actLoginExecute(Sender: TObject);
     procedure actGerentesExecute(Sender: TObject);
     procedure actGamesExecute(Sender: TObject);
@@ -41,6 +43,7 @@ type
     procedure actPlataformasExecute(Sender: TObject);
     procedure actListarUsersExecute(Sender: TObject);
     procedure actAnunciosExecute(Sender: TObject);
+    procedure actCadAnunciosExecute(Sender: TObject);
   private
     { Private declarations }
     procedure DefinirStatusBar;
@@ -58,7 +61,7 @@ implementation
 {$R *.dfm}
 
 uses  untLoginView, untManagerView, udmConexao, untGamesView, untParametros,
-      untPlataformasView, untUsuersView, untAnunciosView;
+      untPlataformasView, untUsuersView, untAnunciosView, untCadAnunciosView;
 
 procedure TfrmPrincipal.FormShow(Sender: TObject);
 begin
@@ -139,6 +142,14 @@ begin
      Application.CreateForm(TfrmAnuncios, frmAnuncios);
 
   frmAnuncios.ShowModal;
+end;
+
+procedure TfrmPrincipal.actCadAnunciosExecute(Sender: TObject);
+begin
+  if frmCadAnuncios = Nil then
+    Application.CreateForm(TfrmCadAnuncios, frmCadAnuncios);
+
+  frmCadAnuncios.ShowModal;
 end;
 
 end.

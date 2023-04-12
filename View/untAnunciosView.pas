@@ -20,10 +20,14 @@ type
     procedure btnPesquisaClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
+    FIdAnuncioSelected: String;
+    FFormCall: String;
     { Private declarations }
     procedure Pesquisar;
   public
     { Public declarations }
+    property IdAnuncioSelected: String read FIdAnuncioSelected write FIdAnuncioSelected;
+    property FormCall: String read FFormCall write FFormCall;
   end;
 
 var
