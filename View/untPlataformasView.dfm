@@ -11,8 +11,8 @@ object frmPlataformas: TfrmPlataformas
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
-  OnClose = FormClose
   OnCreate = FormCreate
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlGrid: TPanel
@@ -26,6 +26,7 @@ object frmPlataformas: TfrmPlataformas
       Top = 1
       Width = 367
       Height = 329
+      Hint = 'Apenas Gerentes podem incluir registro'
       Align = alClient
       DataSource = DMGames.dsGames
       TabOrder = 0
@@ -79,6 +80,7 @@ object frmPlataformas: TfrmPlataformas
       Top = 2
       Width = 177
       Height = 354
+      Hint = 'Apenas Gerentes podem incluir registro'
       Align = alClient
       Caption = '         Cadastrar plataforma            '
       Font.Charset = DEFAULT_CHARSET

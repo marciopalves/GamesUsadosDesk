@@ -101,6 +101,7 @@ object frmLogin: TfrmLogin
     Left = 248
     Top = 80
     object actAdmin: TAction
+      Category = 'Logar'
       Caption = 'actAdmin'
       ShortCut = 32880
       OnExecute = actAdminExecute
@@ -111,9 +112,16 @@ object frmLogin: TfrmLogin
       OnExecute = actClearExecute
     end
     object actGerente: TAction
+      Category = 'Logar'
       Caption = 'actGerente'
       ShortCut = 32881
       OnExecute = actGerenteExecute
+    end
+    object actUser: TAction
+      Category = 'Logar'
+      Caption = 'actUser'
+      ShortCut = 32882
+      OnExecute = actUserExecute
     end
   end
 end

@@ -41,6 +41,10 @@ Const
 
 procedure TDMPlataforma.ListarPlataformas;
 begin
+  GerarLog('Listar Plataformas:'+
+           DMConexao.BaseUrl+
+           RESOURCE_LISTAR);
+
   TRequest.New
       .BaseURL(DMConexao.BaseUrl)
       .Resource(RESOURCE_LISTAR)
@@ -59,7 +63,6 @@ begin
       vResp := TRequest.New
                   .BaseURL(DMConexao.BaseUrl)
                   .Resource(RESOURCE_CRIAR + pNome)
-                  //.ResourceSuffix(pNome)
                   .TokenBearer(DMConexao.Login.Token)
                   .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
                   .Post;

@@ -27,36 +27,36 @@ object frmGamesView: TfrmGamesView
       Width = 601
       Height = 356
       Align = alClient
-      DataSource = DMGames.dsGames
       TabOrder = 0
       TitleFont.Charset = DEFAULT_CHARSET
       TitleFont.Color = clWindowText
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = []
+      OnDblClick = dbgGamesDblClick
       Columns = <
         item
           Expanded = False
           FieldName = 'Id'
-          Width = 34
+          Width = 43
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Title'
-          Width = 152
+          Width = 119
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'Plataform'
-          Width = 159
+          FieldName = 'Plataforma'
+          Width = 124
           Visible = True
         end
         item
           Expanded = False
           FieldName = 'Image'
-          Width = 131
+          Width = 185
           Visible = True
         end>
     end
@@ -68,14 +68,13 @@ object frmGamesView: TfrmGamesView
     Height = 358
     Align = alRight
     TabOrder = 1
-    ExplicitHeight = 248
     object btnPesqGames: TButton
       Left = 14
       Top = 112
       Width = 75
       Height = 25
       Hint = 'Pesquisar Games na API'
-      Caption = 'Atualizar'
+      Caption = 'Pesquisar'
       TabOrder = 0
       OnClick = btnPesqGamesClick
     end

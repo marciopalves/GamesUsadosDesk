@@ -20,12 +20,13 @@ type
     edtPlataforma: TEdit;
     btnCadastrarPlataforma: TButton;
     procedure FormCreate(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnCadastrarPlataformaClick(Sender: TObject);
     procedure btnPesquisarPlataformasClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     procedure LoadPlataformas;
+    procedure Clear;
   public
     { Public declarations }
   end;
@@ -47,15 +48,6 @@ begin
   dbgPlataformas.DataSource := DMPlataforma.dsPlataforma;
 end;
 
-procedure TfrmPlataformas.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  if DMPlataforma <> Nil then
-  begin
-    DMPlataforma.mtPlataforma.Close;
-    DMPlataforma.Free;
-  end;
-end;
-
 procedure TfrmPlataformas.LoadPlataformas;
 begin
   DMPlataforma.ListarPlataformas;
@@ -67,6 +59,7 @@ begin
   begin
     DMPlataforma.CriarNovaPlataforma(edtPlataforma.Text);
     LoadPlataformas;
+    Clear;
   end
   else
   begin
@@ -78,6 +71,17 @@ end;
 procedure TfrmPlataformas.btnPesquisarPlataformasClick(Sender: TObject);
 begin
   LoadPlataformas;
+end;
+
+procedure TfrmPlataformas.Clear;
+begin
+  edtPlataforma.Clear;
+end;
+
+procedure TfrmPlataformas.FormShow(Sender: TObject);
+begin
+  Clear;
+  gbCadPlataforma.Enabled := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType = 'MANAGER');
 end;
 
 end.

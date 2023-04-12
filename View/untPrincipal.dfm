@@ -12,7 +12,7 @@ object frmPrincipal: TfrmPrincipal
   Font.Style = []
   Menu = MainMenu
   OldCreateOrder = False
-  Position = poDesktopCenter
+  Position = poScreenCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -1982,6 +1982,7 @@ object frmPrincipal: TfrmPrincipal
     object actLogin: TAction
       Category = 'Login'
       Caption = 'Login'
+      ShortCut = 32844
       OnExecute = actLoginExecute
     end
     object actDeslogar: TAction
@@ -1995,7 +1996,7 @@ object frmPrincipal: TfrmPrincipal
       OnExecute = actGerentesExecute
     end
     object actGames: TAction
-      Category = 'Cadastros'
+      Category = 'Listar'
       Caption = '&Games'
       Enabled = False
       OnExecute = actGamesExecute
@@ -2006,13 +2007,24 @@ object frmPrincipal: TfrmPrincipal
       OnExecute = actParametrosExecute
     end
     object actAnuncios: TAction
-      Category = 'Cadastros'
-      Caption = '&An'#250'ncios'
+      Category = 'Listar'
+      Caption = 'Listar &An'#250'ncios'
+      OnExecute = actAnunciosExecute
     end
     object actPlataformas: TAction
       Category = 'Cadastros'
       Caption = 'Plataformas'
       OnExecute = actPlataformasExecute
+    end
+    object actListarUsers: TAction
+      Category = 'Listar'
+      Caption = 'Listar Usu'#225'rios'
+      OnExecute = actListarUsersExecute
+    end
+    object actCadAnuncios: TAction
+      Category = 'Cadastros'
+      Caption = 'Cadastro de An'#250'ncios'
+      OnExecute = actCadAnunciosExecute
     end
   end
   object MainMenu: TMainMenu
@@ -2024,14 +2036,11 @@ object frmPrincipal: TfrmPrincipal
         Action = actGerentes
         Hint = 'Apenas usu'#225'rios Admin podem acessar '
       end
-      object Anncios1: TMenuItem
-        Action = actGames
-      end
-      object Anncios2: TMenuItem
-        Action = actAnuncios
-      end
       object Plataformas2: TMenuItem
         Action = actPlataformas
+      end
+      object CadastrodeAnncios1: TMenuItem
+        Action = actCadAnuncios
       end
     end
     object Logar3: TMenuItem
@@ -2041,6 +2050,18 @@ object frmPrincipal: TfrmPrincipal
       end
       object Logar1: TMenuItem
         Action = actLogin
+      end
+    end
+    object Listar1: TMenuItem
+      Caption = 'Listar'
+      object Games1: TMenuItem
+        Action = actGames
+      end
+      object ListarUsurios1: TMenuItem
+        Action = actListarUsers
+      end
+      object Anncios1: TMenuItem
+        Action = actAnuncios
       end
     end
     object Configuraes1: TMenuItem
