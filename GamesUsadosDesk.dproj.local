@@ -72,5 +72,6 @@
     <Transaction>2023/04/12 13:42:14.000.852,=C:\projetos\ufg\GamesUsadosDesk\Unit1.pas</Transaction>
     <Transaction>2023/04/12 13:42:54.000.955,C:\projetos\ufg\GamesUsadosDesk\Unit1.dfm=C:\projetos\ufg\GamesUsadosDesk\View\untCadAnunciosView.dfm</Transaction>
     <Transaction>2023/04/12 13:42:54.000.955,C:\projetos\ufg\GamesUsadosDesk\Unit1.pas=C:\projetos\ufg\GamesUsadosDesk\View\untCadAnunciosView.pas</Transaction>
+    <Transaction>2023/04/14 05:55:41.767,=C:\projetos\ufg\GamesUsadosDesk\Model\untGame.pas</Transaction>
   </Transactions>
 </BorlandProject>

@@ -87,6 +87,7 @@ begin
   actPlataformas.Enabled   := True;
   actAnuncios.Enabled      := DMConexao.Login.Token <> '';
   actListarUsers.Enabled   := DMConexao.Login.Token <> '';
+  actCadAnuncios.Enabled   := DMConexao.Login.Token <> '';
 end;
 
 procedure TfrmPrincipal.DefinirStatusBar;
