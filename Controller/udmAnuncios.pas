@@ -8,7 +8,7 @@ uses
   FireDAC.DApt.Intf, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client,
   System.JSON, Rest.Json, Datasnap.DBClient, IdIOHandler, IdIOHandlerSocket,
   IdIOHandlerStack, IdSSL, IdSSLOpenSSL, IdBaseComponent, IdComponent,
-  IdTCPConnection, IdTCPClient, MidasLib;
+  IdTCPConnection, IdTCPClient, MidasLib, untDenuncia;
 
 type
   TTipoListaAnuncio = (tpMeusAnuncios, tpAnunciosGame);
@@ -36,6 +36,7 @@ type
     procedure ListarAnunciosJogo(const pIdGame: String);
     procedure ListarMeusAnuncios;
     procedure CriarAnuncio(const pIdGame:String; const pValor:String);
+    procedure DenunciarAnuncio(const pDenuncia: TDenuncia);
 
   end;
 
@@ -58,6 +59,7 @@ Const
   RESOURCE_LISTAR_MEUS = '/announcements/my-games';
   RESOURCE_LISTAR_APARTIR_GAME = '/announcements/game/';
   RESOURCE_CRIAR = '/announcements/game/%s/price/%s';
+  RESOURCE_DENUNCIA = '/report';
   ERRO_API = 'Erro ao acessar api!%s %s';
 
 { TDMAnuncios }
@@ -361,6 +363,35 @@ begin
   finally
     FreeAndNil(vGame);
   end;
+end;
+
+procedure TDMAnuncios.DenunciarAnuncio(const pDenuncia: TDenuncia);
+Var
+  vResp:  IResponse;
+  jsBody: TJSonObject;
+begin
+
+  jsBody := TJSONObject.Create();
+  try
+    jsBody.AddPair('Id', pDenuncia.Id);
+    jsBody.AddPair('Description', pDenuncia.Description);
+    jsBody.AddPair('Type', 'game');
+
+    vResp:= TRequest.New
+          .BaseURL(DMConexao.BaseUrl)
+          .Resource(RESOURCE_DENUNCIA)
+          .TokenBearer(DMConexao.Login.Token)
+          .Accept(REST.Types.CONTENTTYPE_APPLICATION_JSON)
+          .AddBody(jsBody)
+          .Post;
+
+     if vResp.StatusCode = 200 then
+        GerarLog('Denúncia criada com sucesso!');
+  finally
+    FreeAndNil(jsBody);
+  end;
+
+
 end;
 
 end.
