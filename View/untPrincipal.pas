@@ -86,7 +86,7 @@ begin
   actGames.Enabled         := True;
   actPlataformas.Enabled   := True;
   actAnuncios.Enabled      := DMConexao.Login.Token <> '';
-  actListarUsers.Enabled   := DMConexao.Login.Token <> '';
+  actListarUsers.Enabled   := (DMConexao.Login.Token <> '') And (DMConexao.Login.UserType <> 'USER');
   actCadAnuncios.Enabled   := DMConexao.Login.Token <> '';
 end;
 
